@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/navbar/Navbar'
 import Footer from '../../components/footer/Footer'
 
@@ -8,11 +9,13 @@ const Home = () => {
   const [filteredProducts, setFilteredProducts] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [visibleCount, setVisibleCount] = useState(4)
+  const navigate = useNavigate()
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/products')
-        setProducts(response.data)
+        const response = await axios.get('http://localhost:3000/api/getproducts')
+        setProducts("api res",response.data)
         setFilteredProducts(response.data)
       } catch (error) {
         console.error('Error fetching products:', error)
@@ -43,6 +46,14 @@ const Home = () => {
     setVisibleCount(prevCount => prevCount + 4) 
   };
 
+  const handleProductClick = (productId) => {
+    if (!productId) {
+    console.error('Product ID is undefined')
+    return
+  }
+    navigate(`/preview/${productId}`)
+  };
+
   return (
     <>
       <Navbar onSearch={handleSearch} /> 
@@ -52,7 +63,8 @@ const Home = () => {
           {filteredProducts.slice(0, visibleCount).map((product, index) => (
             <div
               key={index}
-              className="relative w-full sm:w-[250px] md:w-[300px] h-auto min-h-[300px] bg-white border border-gray-200 rounded shadow-sm"
+              className="relative w-full sm:w-[250px] md:w-[300px] h-auto min-h-[300px] bg-white border border-gray-200 rounded shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+              onClick={() => handleProductClick(product._id)}
             >
               <div className="">
                 <img
@@ -64,7 +76,7 @@ const Home = () => {
               <img
                 className="rounded-t-lg w-full h-40 sm:h-48 object-contain"
                 src={`http://localhost:3000/images/${product.pic[0]}`}
-                alt={product.title}
+                alt={product.adtitle}
               />
               <div className="p-4 sm:p-5">
                 <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">

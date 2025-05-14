@@ -197,9 +197,11 @@ const Bike = () => {
                       className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="">Select Brand</option>
-                      <option value="Toyota">BMW</option>
-                      <option value="Honda">Ducati</option>
-                      <option value="Ford">Bentley</option>
+                      <option value="BMW">BMW</option>
+                      <option value="Hero">Hero</option>
+                      <option value="Honda">Honda</option>
+                      <option value="Bajaj Auto">Bajaj Auto</option>  
+                      <option value="TVS Motors">TVS Motors</option>
                     </select>
                     <img
                       src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
