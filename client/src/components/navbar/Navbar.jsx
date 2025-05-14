@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
-import LoginButton from '../../pages/login/Login';
-import LogoutButton from '../../pages/logout/logout';
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
+import LoginButton from '../../pages/login/Login'
+import LogoutButton from '../../pages/logout/logout'
 import axios from 'axios';
 
-const Navbar = () => {
-  const { isAuthenticated, user } = useAuth0();
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+const Navbar = ({ onSearch }) => { 
+  const { isAuthenticated, user } = useAuth0()
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const navigate = useNavigate();
-  const [ userdata, setUserdata ] = useState({
-    username : '',
-    email : ''
-  })
+  const [userdata, setUserdata] = useState({
+    username: '',
+    email: '',
+  });
 
   const goToBackend = async (data) => {
     try {
-      console.log('bck')
-      const res = await axios.post("http://localhost:3000/api/signup", data)
-      console.log(res.data.id)
-      localStorage.setItem("id", res.data.id)
+      console.log('bck');
+      const res = await axios.post('http://localhost:3000/api/signup', data);
+      console.log(res.data.id);
+      localStorage.setItem('id', res.data.id);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  } 
+  };
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -32,8 +33,7 @@ const Navbar = () => {
       setUserdata(userData);
       goToBackend(userData);
     }
-  }, [isAuthenticated, user]); 
-
+  }, [isAuthenticated, user]);
 
   const toggleMobileSearch = () => {
     setIsMobileSearchOpen(!isMobileSearchOpen);
@@ -56,7 +56,12 @@ const Navbar = () => {
     setIsDropdownOpen(false);
   };
 
-  
+  // search 
+  const handleSearchChange = (e) => {
+    const query = e.target.value
+    setSearchQuery(query)
+    onSearch(query)
+  };
 
   return (
     <nav className="bg-gray-100 shadow-md fixed top-0 left-0 right-0 w-full z-50">
@@ -107,6 +112,8 @@ const Navbar = () => {
                 id="search"
                 placeholder="Find Cars, Mobile Phones and more..."
                 className="w-full py-3 pl-5 pr-12 border-2 border-black-500 rounded-md text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-[#002f34] transition-all"
+                value={searchQuery}
+                onChange={handleSearchChange} 
               />
               <div className="h-12 w-14 bg-black absolute right-0 rounded-r top-1/2 transform -translate-y-1/2 flex items-center justify-center">
                 <img
@@ -318,6 +325,8 @@ const Navbar = () => {
                 id="mobile-search"
                 placeholder="Find Cars, Mobile Phones and more..."
                 className="w-full py-3 pl-5 pr-12 border border-gray-300 rounded-md text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-[#002f34]"
+                value={searchQuery}
+                onChange={handleSearchChange} 
               />
               <img
                 src="/images/3649ea37-bc25-4403-a82c-24ebe116f6d8.svg"
@@ -364,4 +373,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar
