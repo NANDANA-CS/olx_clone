@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Navpost from '../../../components/navbar/Navpost';
 import Foot from '../../../components/footer/Foot';
 
-
 const Bike = () => {
   const [formData, setFormData] = useState({
     brand: '',
@@ -104,7 +103,6 @@ const Bike = () => {
       ],
     },
   ];
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -154,39 +152,40 @@ const Bike = () => {
   };
 
   return (
-
     <>
       <Navpost />
-      <div className="flex justify-center p-4 bg-gray-100 min-h-screen">
-        <div className="w-full  relative">
+      <div className="flex justify-center p-4 sm:p-6 md:p-8 bg-gray-100 min-h-screen">
+        <div className="w-full max-w-screen-lg">
           <div className="flex items-center mb-4">
-            <h1 className="text-2xl font-bold uppercase mx-auto">Post Your Ad</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold uppercase mx-auto">
+              Post Your Ad
+            </h1>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-4 w-[890px] mx-auto">
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
             {/* Selected Category Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Selected Category</h2>
+              <h2 className="text-base sm:text-lg font-bold uppercase p-2">
+                Selected Category
+              </h2>
               <div className="flex justify-between items-center p-2">
-                <span className="text-sm text-gray-600">Bikes / Bikes</span>
-
-                {/* <a href="/sell" className="text-sm text-blue-600 hover:underline">
-                                Change
-                            </a> */}
-
-                <span className='text-sm text-blue-600 hover:underline' onClick={() => navigate("/sell")} >Change</span>
-
-
-
-
+                <span className="text-sm sm:text-base text-gray-600">Bikes / Bikes</span>
+                <span
+                  className="text-sm sm:text-base text-blue-600 hover:underline cursor-pointer"
+                  onClick={() => navigate('/sell')}
+                >
+                  Change
+                </span>
               </div>
             </div>
             {/* Include Some Details Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Include Some Details</h2>
+              <h2 className="text-base sm:text-lg font-bold uppercase p-2">
+                Include Some Details
+              </h2>
               <div className="p-2 space-y-4">
                 {/* Brand */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Brand *
                   </label>
                   <div className="relative">
@@ -194,25 +193,25 @@ const Bike = () => {
                       name="brand"
                       value={formData.brand}
                       onChange={handleInputChange}
-                      className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="">Select Brand</option>
                       <option value="BMW">BMW</option>
                       <option value="Hero">Hero</option>
                       <option value="Honda">Honda</option>
-                      <option value="Bajaj Auto">Bajaj Auto</option>  
+                      <option value="Bajaj Auto">Bajaj Auto</option>
                       <option value="TVS Motors">TVS Motors</option>
                     </select>
                     <img
                       src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
                       alt="Down Arrow"
-                      className="h-5 w-5 top-3 absolute right-2"
+                      className="h-4 w-4 sm:h-5 sm:w-5 absolute top-3 right-2"
                     />
                   </div>
                 </div>
-                {/* Car Name */}
+                {/* Bike Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Bike Name *
                   </label>
                   <input
@@ -220,13 +219,13 @@ const Bike = () => {
                     name="carName"
                     value={formData.carName}
                     onChange={handleInputChange}
-                    placeholder="Enter Car Name (e.g., Civic, Camry)"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter Bike Name (e.g., Splendor, Activa)"
+                    className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 {/* Year */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Year *
                   </label>
                   <input
@@ -235,12 +234,12 @@ const Bike = () => {
                     value={formData.year}
                     onChange={handleInputChange}
                     placeholder="Enter Year"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 {/* Fuel */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Fuel *
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -248,10 +247,11 @@ const Bike = () => {
                       <button
                         key={fuel}
                         onClick={() => handleFuelChange(fuel)}
-                        className={`px-4 py-1 border rounded-md text-sm ${formData.fuel === fuel
-                          ? 'bg-gray-200 border-gray-400'
-                          : 'border-gray-300 hover:bg-gray-100'
-                          }`}
+                        className={`px-3 py-1 sm:px-4 sm:py-2 border rounded-md text-sm sm:text-base ${
+                          formData.fuel === fuel
+                            ? 'bg-gray-200 border-gray-400'
+                            : 'border-gray-300 hover:bg-gray-100'
+                        }`}
                       >
                         {fuel}
                       </button>
@@ -260,7 +260,7 @@ const Bike = () => {
                 </div>
                 {/* Transmission */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Transmission *
                   </label>
                   <div className="flex gap-2">
@@ -268,10 +268,11 @@ const Bike = () => {
                       <button
                         key={transmission}
                         onClick={() => handleTransmissionChange(transmission)}
-                        className={`px-4 py-1 border rounded-md text-sm ${formData.transmission === transmission
-                          ? 'bg-gray-200 border-gray-400'
-                          : 'border-gray-300 hover:bg-gray-100'
-                          }`}
+                        className={`px-3 py-1 sm:px-4 sm:py-2 border rounded-md text-sm sm:text-base ${
+                          formData.transmission === transmission
+                            ? 'bg-gray-200 border-gray-400'
+                            : 'border-gray-300 hover:bg-gray-100'
+                        }`}
                       >
                         {transmission}
                       </button>
@@ -280,7 +281,7 @@ const Bike = () => {
                 </div>
                 {/* Number of Owners */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Number of Owners *
                   </label>
                   <input
@@ -289,12 +290,12 @@ const Bike = () => {
                     value={formData.noOfOwners}
                     onChange={handleInputChange}
                     placeholder="Enter Number of Owners"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 {/* Ad Title */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Ad Title *
                   </label>
                   <input
@@ -303,12 +304,12 @@ const Bike = () => {
                     value={formData.adTitle}
                     onChange={handleInputChange}
                     placeholder="Enter Ad Title"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 {/* Description */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Description *
                   </label>
                   <textarea
@@ -316,7 +317,7 @@ const Bike = () => {
                     value={formData.description}
                     onChange={handleInputChange}
                     placeholder="Enter Description"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                     rows="4"
                   />
                 </div>
@@ -324,11 +325,10 @@ const Bike = () => {
             </div>
             {/* Set a Price Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Set a Price</h2>
+              <h2 className="text-base sm:text-lg font-bold uppercase p-2">Set a Price</h2>
               <div className="p-2 space-y-4">
-                {/* Price */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Price *
                   </label>
                   <input
@@ -337,16 +337,16 @@ const Bike = () => {
                     value={formData.price}
                     onChange={handleInputChange}
                     placeholder="₹ Enter Price"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
             </div>
             {/* Upload Photos Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Upload Photos</h2>
+              <h2 className="text-base sm:text-lg font-bold uppercase p-2">Upload Photos</h2>
               <div className="p-2">
-                <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
                   {images.map((image, index) => (
                     <div key={index} className="relative">
                       {image ? (
@@ -354,7 +354,7 @@ const Bike = () => {
                           <img
                             src={image}
                             alt={`Uploaded ${index + 1}`}
-                            className="w-20 h-20 object-cover rounded-md"
+                            className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-md"
                           />
                           <button
                             onClick={() => removeImage(index)}
@@ -364,16 +364,29 @@ const Bike = () => {
                           </button>
                         </div>
                       ) : (
-                        <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
+                        <label className="flex flex-col items-center justify-center w-16 h-16 sm:w-20 sm:h-20 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
                           <input
                             type="file"
                             accept="image/*"
                             onChange={(e) => handleImageChange(index, e)}
                             className="hidden"
                           />
-                          <span className="text-xl text-gray-500"><svg width="36px" height="36px" viewBox="0 0 1024 1024" data-aut-id="icon"  ><path className="rui-jB92v" d="M861.099 667.008v78.080h77.568v77.653h-77.568v77.141h-77.568v-77.184h-77.611v-77.611h77.611v-78.080h77.568zM617.515 124.16l38.784 116.437h165.973l38.827 38.827v271.659l-38.827 38.357-38.741-38.4v-232.832h-183.125l-38.784-116.48h-176.853l-38.784 116.48h-183.083v426.923h426.667l38.784 38.357-38.784 39.253h-465.493l-38.741-38.869v-504.491l38.784-38.827h165.973l38.827-116.437h288.597zM473.216 318.208c106.837 0 193.92 86.955 193.92 194.048 0 106.923-87.040 194.091-193.92 194.091s-193.963-87.168-193.963-194.091c0-107.093 87.083-194.048 193.963-194.048zM473.216 395.861c-64.213 0-116.352 52.181-116.352 116.395 0 64.256 52.139 116.437 116.352 116.437 64.171 0 116.352-52.181 116.352-116.437 0-64.213-52.181-116.437-116.352-116.437z"></path></svg></span>
+                          <span className="text-xl text-gray-500">
+                            <svg
+                              width="24px"
+                              height="24px"
+                              viewBox="0 0 1024 1024"
+                              data-aut-id="icon"
+                              className="sm:w-36px sm:h-36px"
+                            >
+                              <path
+                                className="rui-jB92v"
+                                d="M861.099 667.008v78.080h77.568v77.653h-77.568v77.141h-77.568v-77.184h-77.611v-77.611h77.611v-78.080h77.568zM617.515 124.16l38.784 116.437h165.973l38.827 38.827v271.659l-38.827 38.357-38.741-38.4v-232.832h-183.125l-38.784-116.48h-176.853l-38.784 116.48h-183.083v426.923h426.667l38.784 38.357-38.784 39.253h-465.493l-38.741-38.869v-504.491l38.784-38.827h165.973l38.827-116.437h288.597zM473.216 318.208c106.837 0 193.92 86.955 193.92 194.048 0 106.923-87.040 194.091-193.92 194.091s-193.963-87.168-193.963-194.091c0-107.093 87.083-194.048 193.963-194.048zM473.216 395.861c-64.213 0-116.352 52.181-116.352 116.395 0 64.256 52.139 116.437 116.352 116.437 64.171 0 116.352-52.181 116.352-116.437 0-64.213-52.181-116.437-116.352-116.437z"
+                              ></path>
+                            </svg>
+                          </span>
                           {index === 0 && (
-                            <span className="text-xs text-gray-600 text-center">
+                            <span className="text-xs sm:text-sm text-gray-600 text-center">
                               Add Photos
                             </span>
                           )}
@@ -386,11 +399,13 @@ const Bike = () => {
             </div>
             {/* Confirm Your Location Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Confirm Your Location</h2>
+              <h2 className="text-base sm:text-lg font-bold uppercase p-2">
+                Confirm Your Location
+              </h2>
               <div className="p-2 space-y-4">
                 {/* State */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                     State *
                   </label>
                   <div className="relative">
@@ -398,7 +413,7 @@ const Bike = () => {
                       name="state"
                       value={location.state}
                       onChange={handleLocationChange}
-                      className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="">Select State</option>
                       {states.map((state) => (
@@ -410,14 +425,14 @@ const Bike = () => {
                     <img
                       src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
                       alt="Down Arrow"
-                      className="h-5 w-5 top-3 absolute right-2"
+                      className="h-4 w-4 sm:h-5 sm:w-5 absolute top-3 right-2"
                     />
                   </div>
                 </div>
                 {/* City */}
                 {location.state && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                       City *
                     </label>
                     <div className="relative">
@@ -425,7 +440,7 @@ const Bike = () => {
                         name="city"
                         value={location.city}
                         onChange={handleLocationChange}
-                        className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="">Select City</option>
                         {states
@@ -439,7 +454,7 @@ const Bike = () => {
                       <img
                         src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
                         alt="Down Arrow"
-                        className="h-5 w-5 top-3 absolute right-2"
+                        className="h-4 w-4 sm:h-5 sm:w-5 absolute top-3 right-2"
                       />
                     </div>
                   </div>
@@ -447,7 +462,7 @@ const Bike = () => {
                 {/* Neighborhood */}
                 {location.city && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
                       Neighborhood *
                     </label>
                     <div className="relative">
@@ -455,7 +470,7 @@ const Bike = () => {
                         name="neighborhood"
                         value={location.neighborhood}
                         onChange={handleLocationChange}
-                        className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         <option value="">Select Neighborhood</option>
                         {states
@@ -470,7 +485,7 @@ const Bike = () => {
                       <img
                         src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
                         alt="Down Arrow"
-                        className="h-5 w-5 top-3 absolute right-2"
+                        className="h-4 w-4 sm:h-5 sm:w-5 absolute top-3 right-2"
                       />
                     </div>
                   </div>
@@ -481,7 +496,7 @@ const Bike = () => {
             <div className="p-2">
               <button
                 onClick={handlePostAd}
-                className="w-full py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full py-2 sm:py-3 bg-blue-600 text-white text-sm sm:text-base font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 Post Your Ad
               </button>
@@ -490,9 +505,8 @@ const Bike = () => {
         </div>
       </div>
       <Foot />
-
     </>
-  )
+  );
 };
 
 export default Bike;

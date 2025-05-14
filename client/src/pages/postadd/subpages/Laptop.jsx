@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Foot from '../../../components/footer/Foot';
 import Navpost from '../../../components/navbar/Navpost';
@@ -11,12 +10,13 @@ const Laptop = () => {
     description: '',
     price: '',
   });
-  const [images, setImages] = useState(Array(12).fill(null));
+  const [images, setImages] = useState(Array(8).fill(null));
   const [location, setLocation] = useState({
     state: '',
     city: '',
     neighborhood: '',
   });
+  const [imageError, setImageError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -57,7 +57,7 @@ const Laptop = () => {
     {
       name: 'Maharashtra',
       cities: [
-        { name: 'Mumbai', neighborhoods: ['Andheri', 'Bandra', 'Dadar', 'Colaba'] },
+        { name: 'Mumbai', neighborhoods: ['Andheri', 'Banda', 'Dadar', 'Colaba'] },
         { name: 'Pune', neighborhoods: ['Kothrud', 'Viman Nagar', 'Hinjewadi'] },
         { name: 'Nagpur', neighborhoods: ['Dharampeth', 'Sitabuldi', 'Manish Nagar'] },
       ],
@@ -155,35 +155,48 @@ const Laptop = () => {
     console.log('Posting ad:', formData, images.filter((img) => img !== null), location);
   };
 
+  // Handle image load error
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <>
-    <Navpost/>
-      <div className="flex justify-center p-4 bg-gray-100 min-h-screen">
-        <div className="w-full  relative">
-
+      <Navpost />
+      <div className="flex justify-center p-3 xs:p-4 sm:p-6 md:p-8 bg-gray-100 min-h-screen">
+        <div className="w-full max-w-screen-lg min-w-[280px]">
           <div className="flex items-center mb-4">
-            <h1 className="text-2xl font-bold uppercase mx-auto">Post Your Ad</h1>
+            <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold uppercase mx-auto">
+              Post Your Ad
+            </h1>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-4 w-[890px] mx-auto">
+          <div className="bg-white rounded-lg shadow-md p-3 xs:p-4 sm:p-6">
             {/* Selected Category Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Selected Category</h2>
+              <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
+                Selected Category
+              </h2>
               <div className="flex justify-between items-center p-2">
-                <span className="text-sm text-gray-600">Laptops / Laptops</span>
-                {/* <a href="#" className="text-sm text-blue-600 hover:underline">
-                                Change
-                            </a> */}
-
-                <span className='text-sm text-blue-600 hover:underline' onClick={() => navigate("/sell")} >Chsange</span>
+                <span className="text-xs xs:text-sm sm:text-base text-gray-600">Laptops / Laptops</span>
+                <button
+                  type="button"
+                  aria-label="Change category"
+                  className="text-xs xs:text-sm sm:text-base text-blue-600 hover:underline cursor-pointer"
+                  onClick={() => navigate('/postadd')}
+                >
+                  Change
+                </button>
               </div>
             </div>
             {/* Include Some Details Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Include Some Details</h2>
+              <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
+                Include Some Details
+              </h2>
               <div className="p-2 space-y-4">
                 {/* Brand */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Brand *
                   </label>
                   <div className="relative">
@@ -191,7 +204,8 @@ const Laptop = () => {
                       name="brand"
                       value={formData.brand}
                       onChange={handleInputChange}
-                      className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 xs:p-2.5 sm:p-3 border border-gray-300 rounded-md text-xs xs:text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      aria-label="Select laptop brand"
                     >
                       <option value="">Select Brand</option>
                       {LaptopBrands.map((brand) => (
@@ -200,16 +214,29 @@ const Laptop = () => {
                         </option>
                       ))}
                     </select>
-                    <img
-                      src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
-                      alt="Down Arrow"
-                      className="h-5 w-5 top-3 absolute right-2"
-                    />
+                    {imageError ? (
+                      <svg
+                        className="h-4 w-4 xs:h-5 xs:w-5 absolute top-3 right-2 text-gray-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    ) : (
+                      <img
+                        src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
+                        alt="Down Arrow"
+                        className="h-4 w-4 xs:h-5 xs:w-5 absolute top-3 right-2"
+                        onError={handleImageError}
+                      />
+                    )}
                   </div>
                 </div>
                 {/* Ad Title */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Ad Title *
                   </label>
                   <input
@@ -218,12 +245,13 @@ const Laptop = () => {
                     value={formData.adTitle}
                     onChange={handleInputChange}
                     placeholder="Enter Ad Title"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 xs:p-2.5 sm:p-3 border border-gray-300 rounded-md text-xs xs:text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-label="Ad title"
                   />
                 </div>
                 {/* Description */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Description *
                   </label>
                   <textarea
@@ -231,19 +259,21 @@ const Laptop = () => {
                     value={formData.description}
                     onChange={handleInputChange}
                     placeholder="Enter Description"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 xs:p-2.5 sm:p-3 border border-gray-300 rounded-md text-xs xs:text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                     rows="4"
+                    aria-label="Ad description"
                   />
                 </div>
               </div>
             </div>
             {/* Set a Price Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Set a Price</h2>
+              <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
+                Set a Price
+              </h2>
               <div className="p-2 space-y-4">
-                {/* Price */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Price *
                   </label>
                   <input
@@ -252,43 +282,59 @@ const Laptop = () => {
                     value={formData.price}
                     onChange={handleInputChange}
                     placeholder="₹ Enter Price"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 xs:p-2.5 sm:p-3 border border-gray-300 rounded-md text-xs xs:text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-label="Price"
                   />
                 </div>
               </div>
             </div>
             {/* Upload Photos Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Upload Photos</h2>
+              <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
+                Upload Photos
+              </h2>
               <div className="p-2">
-                <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-4 gap-2 xs:gap-3">
                   {images.map((image, index) => (
                     <div key={index} className="relative">
                       {image ? (
                         <div>
                           <img
                             src={image}
-                            alt={`Uploaded ${index + 1}`}
-                            className="w-20 h-20 object-cover rounded-md"
+                            alt={`Uploaded image ${index + 1}`}
+                            className="w-16 h-16 xs:w-20 xs:h-20 sm:w-24 sm:h-24 object-cover rounded-md"
                           />
                           <button
                             onClick={() => removeImage(index)}
                             className="absolute top-1 right-1 bg-gray-200 rounded-full p-1 text-xs"
+                            aria-label={`Remove image ${index + 1}`}
                           >
                             ✕
                           </button>
                         </div>
                       ) : (
-                        <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
+                        <label className="flex flex-col items-center justify-center w-16 h-16 xs:w-20 xs:h-20 sm:w-24 sm:h-24 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
                           <input
                             type="file"
                             accept="image/*"
                             onChange={(e) => handleImageChange(index, e)}
                             className="hidden"
+                            aria-label={`Upload image ${index + 1}`}
                           />
-                          <span className="text-xl text-gray-500"><span className="text-xl text-gray-500"><svg width="36px" height="36px" viewBox="0 0 1024 1024" data-aut-id="icon"  ><path className="rui-jB92v" d="M861.099 667.008v78.080h77.568v77.653h-77.568v77.141h-77.568v-77.184h-77.611v-77.611h77.611v-78.080h77.568zM617.515 124.16l38.784 116.437h165.973l38.827 38.827v271.659l-38.827 38.357-38.741-38.4v-232.832h-183.125l-38.784-116.48h-176.853l-38.784 116.48h-183.083v426.923h426.667l38.784 38.357-38.784 39.253h-465.493l-38.741-38.869v-504.491l38.784-38.827h165.973l38.827-116.437h288.597zM473.216 318.208c106.837 0 193.92 86.955 193.92 194.048 0 106.923-87.040 194.091-193.92 194.091s-193.963-87.168-193.963-194.091c0-107.093 87.083-194.048 193.963-194.048zM473.216 395.861c-64.213 0-116.352 52.181-116.352 116.395 0 64.256 52.139 116.437 116.352 116.437 64.171 0 116.352-52.181 116.352-116.437 0-64.213-52.181-116.437-116.352-116.437z"></path></svg></span></span>
+                          <svg
+                            width="24px"
+                            height="24px"
+                            viewBox="0 0 1024 1024"
+                            data-aut-id="icon"
+                            className="w-6 h-6 xs:w-8 xs:h-8 sm:w-9 sm:h-9 text-gray-500"
+                          >
+                            <path
+                              className="rui-jB92v"
+                              d="M861.099 667.008v78.080h77.568v77.653h-77.568v77.141h-77.568v-77.184h-77.611v-77.611h77.611v-78.080h77.568zM617.515 124.16l38.784 116.437h165.973l38.827 38.827v271.659l-38.827 38.357-38.741-38.4v-232.832h-183.125l-38.784-116.48h-176.853l-38.784 116.48h-183.083v426.923h426.667l38.784 38.357-38.784 39.253h-465.493l-38.741-38.869v-504.491l38.784-38.827h165.973l38.827-116.437h288.597zM473.216 318.208c106.837 0 193.92 86.955 193.92 194.048 0 106.923-87.040 194.091-193.92 194.091s-193.963-87.168-193.963-194.091c0-107.093 87.083-194.048 193.963-194.048zM473.216 395.861c-64.213 0-116.352 52.181-116.352 116.395 0 64.256 52.139 116.437 116.352 116.437 64.171 0 116.352-52.181 116.352-116.437 0-64.213-52.181-116.437-116.352-116.437z"
+                            />
+                          </svg>
                           {index === 0 && (
-                            <span className="text-xs text-gray-600 text-center">
+                            <span className="text-xs xs:text-sm text-gray-600 text-center mt-1">
                               Add Photos
                             </span>
                           )}
@@ -301,11 +347,13 @@ const Laptop = () => {
             </div>
             {/* Confirm Your Location Section */}
             <div className="mb-4">
-              <h2 className="text-base font-bold uppercase p-2">Confirm Your Location</h2>
+              <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
+                Confirm Your Location
+              </h2>
               <div className="p-2 space-y-4">
                 {/* State */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     State *
                   </label>
                   <div className="relative">
@@ -313,7 +361,8 @@ const Laptop = () => {
                       name="state"
                       value={location.state}
                       onChange={handleLocationChange}
-                      className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 xs:p-2.5 sm:p-3 border border-gray-300 rounded-md text-xs xs:text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      aria-label="Select state"
                     >
                       <option value="">Select State</option>
                       {states.map((state) => (
@@ -322,17 +371,30 @@ const Laptop = () => {
                         </option>
                       ))}
                     </select>
-                    <img
-                      src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
-                      alt="Down Arrow"
-                      className="h-5 w-5 top-3 absolute right-2"
-                    />
+                    {imageError ? (
+                      <svg
+                        className="h-4 w-4 xs:h-5 xs:w-5 absolute top-3 right-2 text-gray-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    ) : (
+                      <img
+                        src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
+                        alt="Down Arrow"
+                        className="h-4 w-4 xs:h-5 xs:w-5 absolute top-3 right-2"
+                        onError={handleImageError}
+                      />
+                    )}
                   </div>
                 </div>
                 {/* City */}
                 {location.state && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                       City *
                     </label>
                     <div className="relative">
@@ -340,7 +402,8 @@ const Laptop = () => {
                         name="city"
                         value={location.city}
                         onChange={handleLocationChange}
-                        className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 xs:p-2.5 sm:p-3 border border-gray-300 rounded-md text-xs xs:text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        aria-label="Select city"
                       >
                         <option value="">Select City</option>
                         {states
@@ -351,18 +414,31 @@ const Laptop = () => {
                             </option>
                           ))}
                       </select>
-                      <img
-                        src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
-                        alt="Down Arrow"
-                        className="h-5 w-5 top-3 absolute right-2"
-                      />
+                      {imageError ? (
+                        <svg
+                          className="h-4 w-4 xs:h-5 xs:w-5 absolute top-3 right-2 text-gray-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      ) : (
+                        <img
+                          src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
+                          alt="Down Arrow"
+                          className="h-4 w-4 xs:h-5 xs:w-5 absolute top-3 right-2"
+                          onError={handleImageError}
+                        />
+                      )}
                     </div>
                   </div>
                 )}
                 {/* Neighborhood */}
                 {location.city && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                       Neighborhood *
                     </label>
                     <div className="relative">
@@ -370,7 +446,8 @@ const Laptop = () => {
                         name="neighborhood"
                         value={location.neighborhood}
                         onChange={handleLocationChange}
-                        className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 xs:p-2.5 sm:p-3 border border-gray-300 rounded-md text-xs xs:text-sm sm:text-base appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        aria-label="Select neighborhood"
                       >
                         <option value="">Select Neighborhood</option>
                         {states
@@ -382,11 +459,24 @@ const Laptop = () => {
                             </option>
                           ))}
                       </select>
-                      <img
-                        src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
-                        alt="Down Arrow"
-                        className="h-5 w-5 top-3 absolute right-2"
-                      />
+                      {imageError ? (
+                        <svg
+                          className="h-4 w-4 xs:h-5 xs:w-5 absolute top-3 right-2 text-gray-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      ) : (
+                        <img
+                          src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
+                          alt="Down Arrow"
+                          className="h-4 w-4 xs:h-5 xs:w-5 absolute top-3 right-2"
+                          onError={handleImageError}
+                        />
+                      )}
                     </div>
                   </div>
                 )}
@@ -396,7 +486,8 @@ const Laptop = () => {
             <div className="p-2">
               <button
                 onClick={handlePostAd}
-                className="w-full py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full min-h-[44px] py-2 xs:py-2.5 sm:py-3 bg-blue-600 text-white text-xs xs:text-sm sm:text-base font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                aria-label="Post your ad"
               >
                 Post Your Ad
               </button>

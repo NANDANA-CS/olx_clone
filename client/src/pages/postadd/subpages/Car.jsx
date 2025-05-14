@@ -29,98 +29,85 @@ const Car = () => {
 
   const navigate = useNavigate();
 
-  // const states = [
-  //   {
-  //     name: ['Kerala', 'Tamil Nadu', 'Karnataka', 'Goa'],
-  //     cities: [
-  //       { name: 'Thrissur', neighborhoods: ['Wadakancherry', 'Chalakkudy', 'Chavakkad'] },
-  //       { name: 'Ernakulam', neighborhoods: ['Kakkanad', 'Kaloor', 'Edappally', 'Kalamassery'] },
-  //       { name: 'Idukki', neighborhoods: ['Kattappana', 'Painavu', 'Thodupuzha'] },
-  //       { name: 'Kottayam', neighborhoods: ['Pala', 'Ponnkunnam', 'Thodupuzha'] },
-
-
-  //     ],
-  //   },
-  // ];
-const states = [
-  {
-    name: 'Kerala',
-    cities: [
-      { name: 'Thrissur', neighborhoods: ['Wadakancherry', 'Chalakkudy', 'Chavakkad'] },
-      { name: 'Ernakulam', neighborhoods: ['Kakkanad', 'Kaloor', 'Edappally', 'Kalamassery'] },
-      { name: 'Idukki', neighborhoods: ['Kattappana', 'Painavu', 'Thodupuzha'] },
-      { name: 'Kottayam', neighborhoods: ['Pala', 'Ponnkunnam', 'Thodupuzha'] },
-    ],
-  },
-  {
-    name: 'Tamil Nadu',
-    cities: [
-      { name: 'Chennai', neighborhoods: ['T. Nagar', 'Adyar', 'Velachery', 'Kodambakkam'] },
-      { name: 'Madurai', neighborhoods: ['Anna Nagar', 'Thiruppalai', 'KK Nagar'] },
-      { name: 'Coimbatore', neighborhoods: ['Gandhipuram', 'Saibaba Colony', 'Peelamedu'] },
-    ],
-  },
-  {
-    name: 'Karnataka',
-    cities: [
-      { name: 'Bangalore', neighborhoods: ['Koramangala', 'Whitefield', 'Indiranagar', 'Jayanagar'] },
-      { name: 'Mysore', neighborhoods: ['Vijayanagar', 'Saraswathipuram', 'Nazarbad'] },
-      { name: 'Mangalore', neighborhoods: ['Bejai', 'Kankanady', 'Pandeshwar'] },
-    ],
-  },
-  {
-    name: 'Goa',
-    cities: [
-      { name: 'Panaji', neighborhoods: ['Altinho', 'Campal', 'Miramar'] },
-      { name: 'Margao', neighborhoods: ['Fatorda', 'Borda', 'Navelim'] },
-      { name: 'Vasco da Gama', neighborhoods: ['Chicalim', 'Dabolim', 'Vaddem'] },
-    ],
-  },
-  {
-    name: 'Maharashtra',
-    cities: [
-      { name: 'Mumbai', neighborhoods: ['Andheri', 'Bandra', 'Dadar', 'Colaba'] },
-      { name: 'Pune', neighborhoods: ['Kothrud', 'Viman Nagar', 'Hinjewadi'] },
-      { name: 'Nagpur', neighborhoods: ['Dharampeth', 'Sitabuldi', 'Manish Nagar'] },
-    ],
-  },
-  {
-    name: 'Delhi',
-    cities: [
-      { name: 'New Delhi', neighborhoods: ['Connaught Place', 'Karol Bagh', 'Saket'] },
-      { name: 'North Delhi', neighborhoods: ['Model Town', 'Rohini', 'Pitampura'] },
-      { name: 'South Delhi', neighborhoods: ['Hauz Khas', 'Greater Kailash', 'Vasant Kunj'] },
-    ],
-  },
-  {
-    name: 'Telangana',
-    cities: [
-      { name: 'Hyderabad', neighborhoods: ['Banjara Hills', 'Madhapur', 'Gachibowli', 'Begumpet'] },
-      { name: 'Warangal', neighborhoods: ['Hanamkonda', 'Kazipet', 'Subedari'] },
-    ],
-  },
-  {
-    name: 'West Bengal',
-    cities: [
-      { name: 'Kolkata', neighborhoods: ['Salt Lake', 'Behala', 'Garia', 'Park Street'] },
-      { name: 'Howrah', neighborhoods: ['Shibpur', 'Bally', 'Liluah'] },
-    ],
-  },
-  {
-    name: 'Uttar Pradesh',
-    cities: [
-      { name: 'Lucknow', neighborhoods: ['Hazratganj', 'Gomti Nagar', 'Alambagh'] },
-      { name: 'Varanasi', neighborhoods: ['Assi Ghat', 'Bhelupur', 'Lanka'] },
-    ],
-  },
-  {
-    name: 'Gujarat',
-    cities: [
-      { name: 'Ahmedabad', neighborhoods: ['Navrangpura', 'Satellite', 'Maninagar'] },
-      { name: 'Surat', neighborhoods: ['Adajan', 'Vesu', 'Athwa'] },
-    ],
-  },
-];
+  const states = [
+    {
+      name: 'Kerala',
+      cities: [
+        { name: 'Thrissur', neighborhoods: ['Wadakancherry', 'Chalakkudy', 'Chavakkad'] },
+        { name: 'Ernakulam', neighborhoods: ['Kakkanad', 'Kaloor', 'Edappally', 'Kalamassery'] },
+        { name: 'Idukki', neighborhoods: ['Kattappana', 'Painavu', 'Thodupuzha'] },
+        { name: 'Kottayam', neighborhoods: ['Pala', 'Ponnkunnam', 'Thodupuzha'] },
+      ],
+    },
+    {
+      name: 'Tamil Nadu',
+      cities: [
+        { name: 'Chennai', neighborhoods: ['T. Nagar', 'Adyar', 'Velachery', 'Kodambakkam'] },
+        { name: 'Madurai', neighborhoods: ['Anna Nagar', 'Thiruppalai', 'KK Nagar'] },
+        { name: 'Coimbatore', neighborhoods: ['Gandhipuram', 'Saibaba Colony', 'Peelamedu'] },
+      ],
+    },
+    {
+      name: 'Karnataka',
+      cities: [
+        { name: 'Bangalore', neighborhoods: ['Koramangala', 'Whitefield', 'Indiranagar', 'Jayanagar'] },
+        { name: 'Mysore', neighborhoods: ['Vijayanagar', 'Saraswathipuram', 'Nazarbad'] },
+        { name: 'Mangalore', neighborhoods: ['Bejai', 'Kankanady', 'Pandeshwar'] },
+      ],
+    },
+    {
+      name: 'Goa',
+      cities: [
+        { name: 'Panaji', neighborhoods: ['Altinho', 'Campal', 'Miramar'] },
+        { name: 'Margao', neighborhoods: ['Fatorda', 'Borda', 'Navelim'] },
+        { name: 'Vasco da Gama', neighborhoods: ['Chicalim', 'Dabolim', 'Vaddem'] },
+      ],
+    },
+    {
+      name: 'Maharashtra',
+      cities: [
+        { name: 'Mumbai', neighborhoods: ['Andheri', 'Bandra', 'Dadar', 'Colaba'] },
+        { name: 'Pune', neighborhoods: ['Kothrud', 'Viman Nagar', 'Hinjewadi'] },
+        { name: 'Nagpur', neighborhoods: ['Dharampeth', 'Sitabuldi', 'Manish Nagar'] },
+      ],
+    },
+    {
+      name: 'Delhi',
+      cities: [
+        { name: 'New Delhi', neighborhoods: ['Connaught Place', 'Karol Bagh', 'Saket'] },
+        { name: 'North Delhi', neighborhoods: ['Model Town', 'Rohini', 'Pitampura'] },
+        { name: 'South Delhi', neighborhoods: ['Hauz Khas', 'Greater Kailash', 'Vasant Kunj'] },
+      ],
+    },
+    {
+      name: 'Telangana',
+      cities: [
+        { name: 'Hyderabad', neighborhoods: ['Banjara Hills', 'Madhapur', 'Gachibowli', 'Begumpet'] },
+        { name: 'Warangal', neighborhoods: ['Hanamkonda', 'Kazipet', 'Subedari'] },
+      ],
+    },
+    {
+      name: 'West Bengal',
+      cities: [
+        { name: 'Kolkata', neighborhoods: ['Salt Lake', 'Behala', 'Garia', 'Park Street'] },
+        { name: 'Howrah', neighborhoods: ['Shibpur', 'Bally', 'Liluah'] },
+      ],
+    },
+    {
+      name: 'Uttar Pradesh',
+      cities: [
+        { name: 'Lucknow', neighborhoods: ['Hazratganj', 'Gomti Nagar', 'Alambagh'] },
+        { name: 'Varanasi', neighborhoods: ['Assi Ghat', 'Bhelupur', 'Lanka'] },
+      ],
+    },
+    {
+      name: 'Gujarat',
+      cities: [
+        { name: 'Ahmedabad', neighborhoods: ['Navrangpura', 'Satellite', 'Maninagar'] },
+        { name: 'Surat', neighborhoods: ['Adajan', 'Vesu', 'Athwa'] },
+      ],
+    },
+  ];
 
   const years = Array.from({ length: 2025 - 2000 + 1 }, (_, i) => (2025 - i).toString());
 
@@ -236,7 +223,6 @@ const states = [
         }
       });
 
-
       formDataToSend.append('location[state]', location.state);
       formDataToSend.append('location[city]', location.city);
       formDataToSend.append('location[neighborhood]', location.neighborhood);
@@ -267,20 +253,25 @@ const states = [
   return (
     <>
       <Navpost />
-      <div className="flex justify-center p-4 bg-gray-100 min-h-screen">
+      {/* Main Container - Full width with responsiveness */}
+      <div className="flex justify-center p-2 md:p-4 bg-gray-100 min-h-screen">
         <div className="w-full relative">
-
-
-
-          <div className="flex  mb-4 ">
-            <h1 className="text-2xl font-bold uppercase mx-auto">Post Your Ad</h1>
+          
+          {/* Header */}
+          <div className="flex mb-4">
+            <h1 className="text-xl md:text-2xl font-bold uppercase mx-auto">Post Your Ad</h1>
           </div>
+          
+          {/* Error Message */}
           {error && (
-            <div className="mb-4 p-2 bg-red-100 text-red-700 text-sm rounded-md">
+            <div className="mb-4 p-2 bg-red-100 text-red-700 text-sm rounded-md max-w-3xl mx-auto">
               {error}
             </div>
           )}
-          <div className="bg-white rounded-lg shadow-md p-4 w-[890px] mx-auto ">
+          
+          {/* Main Form Container */}
+          <div className="bg-white rounded-lg shadow-md p-3 md:p-4 max-w-3xl mx-auto">
+            
             {/* Selected Category Section */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Selected Category</h2>
@@ -294,6 +285,7 @@ const states = [
                 </span>
               </div>
             </div>
+            
             {/* Include Some Details Section */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Include Some Details</h2>
@@ -312,19 +304,14 @@ const states = [
                     >
                       <option value="">Select Brand</option>
                       {[
-                        'BMW', , 'Jaguar', 'Mercedes Benz',
+                        'BMW', 'Jaguar', 'Mercedes Benz',
                         'Audi', 'Rolls Royce', 'Lamborghini',
                         'Ferrari', 'Bugatti', 'Nissan', 'Maruti Suzuki',
                         'Toyota', 'Porsche', 'Ford'
-
                       ].map((brand) => (
                         <option key={brand} value={brand}>{brand}</option>
                       ))}
                     </select>
-                    {/* <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
-                                        ▼
-                                    </span> */}
-
                     <img
                       src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
                       alt="Down Arrow"
@@ -332,6 +319,7 @@ const states = [
                     />
                   </div>
                 </div>
+                
                 {/* Car Name */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -346,17 +334,20 @@ const states = [
                     className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
+                
                 {/* Year */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Year *
                   </label>
                   <div>
-                    <input type="number"
+                    <input 
+                      type="number"
                       name="year"
                       value={formData.year}
                       onChange={handleInputChange}
-                      className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                    />
                   </div>
                 </div>
 
@@ -370,16 +361,18 @@ const states = [
                       <button
                         key={fuel}
                         onClick={() => handleFuelChange(fuel)}
-                        className={`px-4 py-1 border rounded-md text-sm ${formData.fuel === fuel
-                          ? 'bg-gray-200 border-gray-400'
-                          : 'border-gray-300 hover:bg-gray-100'
-                          }`}
+                        className={`px-3 py-1 border rounded-md text-xs sm:text-sm ${
+                          formData.fuel === fuel
+                            ? 'bg-gray-200 border-gray-400'
+                            : 'border-gray-300 hover:bg-gray-100'
+                        }`}
                       >
                         {fuel}
                       </button>
                     ))}
                   </div>
                 </div>
+                
                 {/* Transmission */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -390,16 +383,18 @@ const states = [
                       <button
                         key={transmission}
                         onClick={() => handleTransmissionChange(transmission)}
-                        className={`px-4 py-1 border rounded-md text-sm ${formData.transmission === transmission
-                          ? 'bg-gray-200 border-gray-400'
-                          : 'border-gray-300 hover:bg-gray-100'
-                          }`}
+                        className={`px-4 py-1 border rounded-md text-sm ${
+                          formData.transmission === transmission
+                            ? 'bg-gray-200 border-gray-400'
+                            : 'border-gray-300 hover:bg-gray-100'
+                        }`}
                       >
                         {transmission}
                       </button>
                     ))}
                   </div>
                 </div>
+                
                 {/* Kilometers Driven */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -413,6 +408,7 @@ const states = [
                     className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
+                
                 {/* Number of Owners */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -423,16 +419,18 @@ const states = [
                       <button
                         key={noOfOwners}
                         onClick={() => handleNoOfOwnersChange(noOfOwners)}
-                        className={`px-4 py-1 border rounded-md text-sm ${formData.noOfOwners === noOfOwners
-                          ? 'bg-gray-200 border-gray-400'
-                          : 'border-gray-300 hover:bg-gray-100'
-                          }`}
+                        className={`px-3 py-1 border rounded-md text-xs sm:text-sm ${
+                          formData.noOfOwners === noOfOwners
+                            ? 'bg-gray-200 border-gray-400'
+                            : 'border-gray-300 hover:bg-gray-100'
+                        }`}
                       >
                         {noOfOwners}
                       </button>
                     ))}
                   </div>
                 </div>
+                
                 {/* Ad Title */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -443,10 +441,10 @@ const states = [
                     name="adTitle"
                     value={formData.adTitle}
                     onChange={handleInputChange}
-
                     className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
+                
                 {/* Description */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -484,66 +482,76 @@ const states = [
                 </div>
               </div>
             </div>
+            
             <hr className='border border-gray-200' />
+            
             {/* Upload Photos Section */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Upload Photos</h2>
               <div className="p-2">
-                <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
-                  {Array(20)
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                  {Array(Math.min(10, 20 - formData.images.length))
                     .fill(null)
-                    .map((_, index) => (
-                      <div key={index} className="relative">
-                        {imagePreviews[index] ? (
-                          <div>
-                            <img
-                              src={imagePreviews[index]}
-                              alt={`Uploaded ${index + 1}`}
-                              className="w-20 h-20 object-cover rounded-md"
-                            />
-                            <button
-                              onClick={() => removeImage(index)}
-                              className="absolute top-1 right-1 bg-gray-200 rounded-full p-1 text-xs"
-                            >
-                              ✕
-                            </button>
-                          </div>
-                        ) : (
-                          <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
-                            <input
-                              type="file"
-                              accept="image/*"
-                              multiple
-                              onChange={handleImageChange}
-                              className="hidden"
-                              disabled={formData.images.length >= 20}
-                            />
-                            <span className="text-xl text-gray-500">
-                              <svg
-                                width="36px"
-                                height="36px"
-                                viewBox="0 0 1024 1024"
-                                data-aut-id="icon"
+                    .map((_, index) => {
+                      const actualIndex = index + imagePreviews.length;
+                      return (
+                        <div key={actualIndex} className="relative">
+                          {index < imagePreviews.length ? (
+                            <div>
+                              <img
+                                src={imagePreviews[index]}
+                                alt={`Uploaded ${index + 1}`}
+                                className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-md"
+                              />
+                              <button
+                                onClick={() => removeImage(index)}
+                                className="absolute top-1 right-1 bg-gray-200 rounded-full p-1 text-xs"
                               >
-                                <path
-                                  className="rui-jB92v"
-                                  d="M861.099 667.008v78.080h77.568v77.653h-77.568v77.141h-77.568v-77.184h-77.611v-77.611h77.611v-78.080h77.568zM617.515 124.16l38.784 116.437h165.973l38.827 38.827v271.659l-38.827 38.357-38.741-38.4v-232.832h-183.125l-38.784-116.48h-176.853l-38.784 116.48h-183.083v426.923h426.667l38.784 38.357-38.784 39.253h-465.493l-38.741-38.869v-504.491l38.784-38.827h165.973l38.827-116.437h288.597zM473.216 318.208c106.837 0 193.92 86.955 193.92 194.048 0 106.923-87.040 194.091-193.92 194.091s-193.963-87.168-193.963-194.091c0-107.093 87.083-194.048 193.963-194.048zM473.216 395.861c-64.213 0-116.352 52.181-116.352 116.395 0 64.256 52.139 116.437 116.352 116.437 64.171 0 116.352-52.181 116.352-116.437 0-64.213-52.181-116.437-116.352-116.437z"
-                                ></path>
-                              </svg>
-                            </span>
-                            {index === 0 && (
-                              <span className="text-xs text-gray-600 text-center">
-                                Add Photos
+                                ✕
+                              </button>
+                            </div>
+                          ) : (
+                            <label className="flex flex-col items-center justify-center w-16 h-16 sm:w-20 sm:h-20 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                multiple
+                                onChange={handleImageChange}
+                                className="hidden"
+                                disabled={formData.images.length >= 20}
+                              />
+                              <span className="text-xl text-gray-500">
+                                <svg
+                                  width="24px"
+                                  height="24px"
+                                  viewBox="0 0 1024 1024"
+                                  data-aut-id="icon"
+                                >
+                                  <path
+                                    className="rui-jB92v"
+                                    d="M861.099 667.008v78.080h77.568v77.653h-77.568v77.141h-77.568v-77.184h-77.611v-77.611h77.611v-78.080h77.568zM617.515 124.16l38.784 116.437h165.973l38.827 38.827v271.659l-38.827 38.357-38.741-38.4v-232.832h-183.125l-38.784-116.48h-176.853l-38.784 116.48h-183.083v426.923h426.667l38.784 38.357-38.784 39.253h-465.493l-38.741-38.869v-504.491l38.784-38.827h165.973l38.827-116.437h288.597zM473.216 318.208c106.837 0 193.92 86.955 193.92 194.048 0 106.923-87.040 194.091-193.92 194.091s-193.963-87.168-193.963-194.091c0-107.093 87.083-194.048 193.963-194.048zM473.216 395.861c-64.213 0-116.352 52.181-116.352 116.395 0 64.256 52.139 116.437 116.352 116.437 64.171 0 116.352-52.181 116.352-116.437 0-64.213-52.181-116.437-116.352-116.437z"
+                                  ></path>
+                                </svg>
                               </span>
-                            )}
-                          </label>
-                        )}
-                      </div>
-                    ))}
+                              {index === 0 && (
+                                <span className="text-xs text-gray-600 text-center">
+                                  Add Photos
+                                </span>
+                              )}
+                            </label>
+                          )}
+                        </div>
+                      );
+                    })}
                 </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  {formData.images.length}/20 images uploaded
+                </p>
               </div>
             </div>
+            
             <hr className='border border-gray-200' />
+            
             {/* Confirm Your Location Section */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Confirm Your Location</h2>
@@ -567,13 +575,14 @@ const states = [
                         </option>
                       ))}
                     </select>
-                   <img
-                    src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
-                    alt="Down Arrow"
-                    className="h-5 w-5 top-3 absolute right-2"
-                  />
+                    <img
+                      src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
+                      alt="Down Arrow"
+                      className="h-5 w-5 top-3 absolute right-2"
+                    />
                   </div>
                 </div>
+                
                 {/* City */}
                 {location.state && (
                   <div>
@@ -596,14 +605,15 @@ const states = [
                             </option>
                           ))}
                       </select>
-                       <img
-                    src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
-                    alt="Down Arrow"
-                    className="h-5 w-5 top-3 absolute right-2"
-                  />
+                      <img
+                        src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
+                        alt="Down Arrow"
+                        className="h-5 w-5 top-3 absolute right-2"
+                      />
                     </div>
                   </div>
                 )}
+                
                 {/* Neighborhood */}
                 {location.city && (
                   <div>
@@ -627,17 +637,19 @@ const states = [
                             </option>
                           ))}
                       </select>
-                       <img
-                    src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
-                    alt="Down Arrow"
-                    className="h-5 w-5 top-3 absolute right-2"
-                  />
+                      <img
+                        src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
+                        alt="Down Arrow"
+                        className="h-5 w-5 top-3 absolute right-2"
+                      />
                     </div>
                   </div>
                 )}
               </div>
             </div>
+            
             <hr className='border border-gray-200' />
+            
             {/* Post Your Ad Button */}
             <div className="p-2">
               <button
