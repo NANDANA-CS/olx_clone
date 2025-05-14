@@ -25,8 +25,14 @@ const Postadd = () => {
       case 'Bikes':
         navigate('/bike'); 
         break;
+      case 'Mobile':
+        navigate("/mobile")
+        break
+      case 'Computers & Laptops':
+        navigate("/Laptop")
+        break
       default:
-        navigate('/add'); 
+        navigate('/postadd'); 
         break;
     }
   };

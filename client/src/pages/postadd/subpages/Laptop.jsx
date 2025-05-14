@@ -1,22 +1,17 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navpost from '../../../components/navbar/Navpost';
 import Foot from '../../../components/footer/Foot';
+import Navpost from '../../../components/navbar/Navpost';
 
-
-const Bike = () => {
+const Laptop = () => {
   const [formData, setFormData] = useState({
     brand: '',
-    carName: '',
-    year: '',
-    fuel: '',
-    transmission: '',
-    noOfOwners: '',
     adTitle: '',
     description: '',
     price: '',
   });
-  const [images, setImages] = useState(Array(20).fill(null));
+  const [images, setImages] = useState(Array(12).fill(null));
   const [location, setLocation] = useState({
     state: '',
     city: '',
@@ -105,17 +100,24 @@ const Bike = () => {
     },
   ];
 
+  const LaptopBrands = [
+    'Apple',
+    'Samsung',
+    'Lenovo',
+    'Google',
+    'Dell',
+    'Hp',
+    'Asus',
+    'MSI',
+    'ThinkPad',
+    'Acer',
+    'Toshiba',
+    'LG',
+  ];
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleFuelChange = (fuel) => {
-    setFormData((prev) => ({ ...prev, fuel }));
-  };
-
-  const handleTransmissionChange = (transmission) => {
-    setFormData((prev) => ({ ...prev, transmission }));
   };
 
   const handleImageChange = (index, e) => {
@@ -154,11 +156,11 @@ const Bike = () => {
   };
 
   return (
-
     <>
-      <Navpost />
+    <Navpost/>
       <div className="flex justify-center p-4 bg-gray-100 min-h-screen">
         <div className="w-full  relative">
+
           <div className="flex items-center mb-4">
             <h1 className="text-2xl font-bold uppercase mx-auto">Post Your Ad</h1>
           </div>
@@ -167,17 +169,12 @@ const Bike = () => {
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Selected Category</h2>
               <div className="flex justify-between items-center p-2">
-                <span className="text-sm text-gray-600">Bikes / Bikes</span>
-
-                {/* <a href="/sell" className="text-sm text-blue-600 hover:underline">
+                <span className="text-sm text-gray-600">Laptops / Laptops</span>
+                {/* <a href="#" className="text-sm text-blue-600 hover:underline">
                                 Change
                             </a> */}
 
-                <span className='text-sm text-blue-600 hover:underline' onClick={() => navigate("/sell")} >Change</span>
-
-
-
-
+                <span className='text-sm text-blue-600 hover:underline' onClick={() => navigate("/sell")} >Chsange</span>
               </div>
             </div>
             {/* Include Some Details Section */}
@@ -197,9 +194,11 @@ const Bike = () => {
                       className="w-full p-2 border border-gray-300 rounded-md text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="">Select Brand</option>
-                      <option value="Toyota">BMW</option>
-                      <option value="Honda">Ducati</option>
-                      <option value="Ford">Bentley</option>
+                      {LaptopBrands.map((brand) => (
+                        <option key={brand} value={brand}>
+                          {brand}
+                        </option>
+                      ))}
                     </select>
                     <img
                       src="/images/4a61b31e-53ec-4034-a36f-ec19c689777b.svg"
@@ -207,88 +206,6 @@ const Bike = () => {
                       className="h-5 w-5 top-3 absolute right-2"
                     />
                   </div>
-                </div>
-                {/* Car Name */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Bike Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="carName"
-                    value={formData.carName}
-                    onChange={handleInputChange}
-                    placeholder="Enter Car Name (e.g., Civic, Camry)"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                {/* Year */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Year *
-                  </label>
-                  <input
-                    type="number"
-                    name="year"
-                    value={formData.year}
-                    onChange={handleInputChange}
-                    placeholder="Enter Year"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                {/* Fuel */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Fuel *
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {['CNG & Hybrids', 'Diesel', 'Electric', 'LPG', 'Petrol'].map((fuel) => (
-                      <button
-                        key={fuel}
-                        onClick={() => handleFuelChange(fuel)}
-                        className={`px-4 py-1 border rounded-md text-sm ${formData.fuel === fuel
-                          ? 'bg-gray-200 border-gray-400'
-                          : 'border-gray-300 hover:bg-gray-100'
-                          }`}
-                      >
-                        {fuel}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                {/* Transmission */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Transmission *
-                  </label>
-                  <div className="flex gap-2">
-                    {['Automatic', 'Manual'].map((transmission) => (
-                      <button
-                        key={transmission}
-                        onClick={() => handleTransmissionChange(transmission)}
-                        className={`px-4 py-1 border rounded-md text-sm ${formData.transmission === transmission
-                          ? 'bg-gray-200 border-gray-400'
-                          : 'border-gray-300 hover:bg-gray-100'
-                          }`}
-                      >
-                        {transmission}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                {/* Number of Owners */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Number of Owners *
-                  </label>
-                  <input
-                    type="number"
-                    name="noOfOwners"
-                    value={formData.noOfOwners}
-                    onChange={handleInputChange}
-                    placeholder="Enter Number of Owners"
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
                 </div>
                 {/* Ad Title */}
                 <div>
@@ -369,7 +286,7 @@ const Bike = () => {
                             onChange={(e) => handleImageChange(index, e)}
                             className="hidden"
                           />
-                          <span className="text-xl text-gray-500"><svg width="36px" height="36px" viewBox="0 0 1024 1024" data-aut-id="icon"  ><path className="rui-jB92v" d="M861.099 667.008v78.080h77.568v77.653h-77.568v77.141h-77.568v-77.184h-77.611v-77.611h77.611v-78.080h77.568zM617.515 124.16l38.784 116.437h165.973l38.827 38.827v271.659l-38.827 38.357-38.741-38.4v-232.832h-183.125l-38.784-116.48h-176.853l-38.784 116.48h-183.083v426.923h426.667l38.784 38.357-38.784 39.253h-465.493l-38.741-38.869v-504.491l38.784-38.827h165.973l38.827-116.437h288.597zM473.216 318.208c106.837 0 193.92 86.955 193.92 194.048 0 106.923-87.040 194.091-193.92 194.091s-193.963-87.168-193.963-194.091c0-107.093 87.083-194.048 193.963-194.048zM473.216 395.861c-64.213 0-116.352 52.181-116.352 116.395 0 64.256 52.139 116.437 116.352 116.437 64.171 0 116.352-52.181 116.352-116.437 0-64.213-52.181-116.437-116.352-116.437z"></path></svg></span>
+                          <span className="text-xl text-gray-500"><span className="text-xl text-gray-500"><svg width="36px" height="36px" viewBox="0 0 1024 1024" data-aut-id="icon"  ><path className="rui-jB92v" d="M861.099 667.008v78.080h77.568v77.653h-77.568v77.141h-77.568v-77.184h-77.611v-77.611h77.611v-78.080h77.568zM617.515 124.16l38.784 116.437h165.973l38.827 38.827v271.659l-38.827 38.357-38.741-38.4v-232.832h-183.125l-38.784-116.48h-176.853l-38.784 116.48h-183.083v426.923h426.667l38.784 38.357-38.784 39.253h-465.493l-38.741-38.869v-504.491l38.784-38.827h165.973l38.827-116.437h288.597zM473.216 318.208c106.837 0 193.92 86.955 193.92 194.048 0 106.923-87.040 194.091-193.92 194.091s-193.963-87.168-193.963-194.091c0-107.093 87.083-194.048 193.963-194.048zM473.216 395.861c-64.213 0-116.352 52.181-116.352 116.395 0 64.256 52.139 116.437 116.352 116.437 64.171 0 116.352-52.181 116.352-116.437 0-64.213-52.181-116.437-116.352-116.437z"></path></svg></span></span>
                           {index === 0 && (
                             <span className="text-xs text-gray-600 text-center">
                               Add Photos
@@ -488,9 +405,8 @@ const Bike = () => {
         </div>
       </div>
       <Foot />
-
     </>
-  )
+  );
 };
 
-export default Bike;
+export default Laptop;
