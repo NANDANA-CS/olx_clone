@@ -28,7 +28,7 @@ const Postadd = () => {
       case 'Mobile':
         navigate("/mobile")
         break
-      case 'Computers & Laptops':
+      case 'Laptops':
         navigate("/Laptop")
         break
       default:

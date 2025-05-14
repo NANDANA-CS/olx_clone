@@ -4,8 +4,8 @@ const userSchema = new mongoose.Schema({
     profilepicture: { type: String, default: null },
     username: { type: String, required: true},
     email: { type: String, required: true},
-    phone:{type:String,required:true},
-    password: { type: String, required: true },
+    phone:{type:String,  default: null},
+    password: { type: String, default: null },
     wishlist:{type:Array,default:null},
     otp:{type:Number,default:null}
 });

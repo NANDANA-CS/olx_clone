@@ -9,47 +9,33 @@ import nodemailer from "nodemailer"
 
 // signup
 export const signUp = async (req, res) => {
-    try {
+  try {
+    console.log("signup function");
 
-        // console.log(req.body.username)
+    console.log(req.body);
 
-        const { username, email, phone, password } = req.body;
-        const file = req.file;
-        console.log("Signup", req.body, req.file);
+    console.log("add user in controller");
+    const {  username, email } = req.body
 
-        if (!username || !email || !phone || !password) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
 
-        const userExist = await userSchema.findOne({ email });
-        if (userExist) {
-            return res.status(400).json({ message: "User already exists" });
-        }
+    if (!(username && email)) {
+      return res.status(404).send({ error: "Email or Username is incorrect" })
+  }
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+    const userExist = await userSchema.findOne({email})
 
-        const userData = {
-            username,
-            email,
-            phone,
-            password: hashedPassword,
-            profilepic: file ? `${file.filename}` : null,
+    if(userExist) {
+      return res.status(200).send({ success: "succesfully loggedin", id:userExist._id })
 
-        };
-
-        const newUser = new userSchema(userData);
-        await newUser.save();
-
-        const token = jwt.sign({ id: newUser._id }, process.env.JWT_KEY, {
-            expiresIn: "24h",
-        });
-        res.status(201).json({ message: "Signup successful", token });
-
-    } catch (error) {
-        console.error("Signup error:", error);
-        res.status(500).json({ message: "Server error" });
     }
+
+    const data = await userSchema.create({ username, email })
+    res.status(201).send({id:data._id})
+
+  } catch (error) {
+    console.log({errorMessage: error})
+    res.status(500).send(error)
+  }
 }
 
 
@@ -143,7 +129,7 @@ export const addProducts = async (req, res) => {
 // getproduct
 export const getProducts = async (req, res) => {
     try {
-        const data = await addSchema.find()
+        const data = await addSchema.find().sort({date:-1})
         console.log(data, "uploaded data")
         if (!data) {
             return res.status(400).json({ message: "data not found" })
