@@ -1,10 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Nav = () => {
+const Navpost = () => {
   const navigate = useNavigate()
   const goToHome = () => {
-    navigate('/') 
+    confirm("Are you sure you want to leave? Your progress will not be saved")
+    navigate('/postadd') 
   }
   return (
     <>
@@ -15,4 +16,4 @@ const Nav = () => {
   )
 }
 
-export default Nav
+export default Navpost

@@ -150,30 +150,30 @@ const Navbar = () => {
                         <div className="cursor-pointer px-2 py-2 bg-blue-800 hover:bg-white hover:text-blue-800 border border-blue-800 border-5 text-white mx-4 text-center mb-4 mt-4 text-xl">
                           <p>View and Edit Profile</p>
                         </div>
-                        <hr />
-                        <div className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded transition text-black-800 text-xl">
+                        <hr className='border border-gray-200'/>
+                        <div className="flex items-center space-x-3 px-2 py-3 hover:bg-blue-100 rounded transition text-black-800 text-xl">
                           <svg width="23px" height="23px" viewBox="0 0 1024 1024" data-aut-id="icon" class="" fill-rule="evenodd"><path class="rui-w4DG7" d="M426.667 42.667h170.667l42.667 42.667-42.667 42.667h256l42.667 42.667v768l-42.667 42.667h-682.667l-42.667-42.667v-768l42.667-42.667h256l-42.667-42.667 42.667-42.667zM213.333 896h597.333v-682.667h-597.333v682.667zM469.333 426.667v-85.333h256v85.333h-256zM298.667 426.667v-85.333h85.333v85.333h-85.333zM469.333 597.333v-85.333h256v85.333h-256zM298.667 597.333v-85.333h85.333v85.333h-85.333zM469.333 768v-85.333h256v85.333h-256zM298.667 768v-85.333h85.333v85.333h-85.333z"></path></svg>
                           <p>My Ads</p>
                         </div>
 
-                        <div className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded transition text-xl">
+                        <div className="flex items-center space-x-3 px-2 py-3 hover:bg-blue-100 rounded transition text-xl">
                           <svg width="23px" height="23px" viewBox="0 0 1024 1024" data-aut-id="icon" class="" fill-rule="evenodd"><path class="rui-w4DG7" d="M426.667 42.667h170.667l42.667 42.667-42.667 42.667h256l42.667 42.667v768l-42.667 42.667h-682.667l-42.667-42.667v-768l42.667-42.667h256l-42.667-42.667 42.667-42.667zM213.333 896h597.333v-682.667h-597.333v682.667zM469.333 426.667v-85.333h256v85.333h-256zM298.667 426.667v-85.333h85.333v85.333h-85.333zM469.333 597.333v-85.333h256v85.333h-256zM298.667 597.333v-85.333h85.333v85.333h-85.333zM469.333 768v-85.333h256v85.333h-256zM298.667 768v-85.333h85.333v85.333h-85.333z"></path></svg>
                           <p>Buy Business Package</p>
                         </div>
-                        <div className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded transition text-xl">
+                        <div className="flex items-center space-x-3 px-2 py-3 hover:bg-blue-100 rounded transition text-xl">
                           <svg width="23px" height="23px" viewBox="0 0 1024 1024" data-aut-id="icon" class="" fill-rule="evenodd"><path class="rui-w4DG7" d="M899.285 256l39.381 39.083v476.501l-39.381 39.083h-774.571l-39.381-39.083v-476.501l39.381-39.083h774.571zM853.461 511.573h-681.6v213.632h681.6v-213.632zM693.205 618.411h76.459l34.901 32.213-34.901 32.213h-128.896l-34.901-32.213 34.901-32.213h52.437zM853.461 341.248h-681.387v86.357l681.387-2.347v-84.053z"></path></svg>
                           <p>Bought Package and Buildings</p>
                         </div>
-                        <hr />
-                        <div className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded transition text-xl">
+                        <hr className='border border-gray-200'/>
+                        <div className="flex items-center space-x-3 px-2 py-3 hover:bg-blue-100 rounded transition text-xl">
                           <svg width="23px" height="23px" viewBox="0 0 1024 1024" data-aut-id="icon" class="" fill-rule="evenodd"><path class="rui-w4DG7" d="M899.285 256l39.381 39.083v476.501l-39.381 39.083h-774.571l-39.381-39.083v-476.501l39.381-39.083h774.571zM853.461 511.573h-681.6v213.632h681.6v-213.632zM693.205 618.411h76.459l34.901 32.213-34.901 32.213h-128.896l-34.901-32.213 34.901-32.213h52.437zM853.461 341.248h-681.387v86.357l681.387-2.347v-84.053z"></path></svg>
                           <p>Help</p>
                         </div>
-                        <div className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded transition text-xl">
+                        <div className="flex items-center space-x-3 px-2 py-3 hover:bg-blue-100 rounded transition text-xl">
                           <svg width="23px" height="23px" viewBox="0 0 1024 1024" data-aut-id="icon" class="" fill-rule="evenodd"><path class="rui-w4DG7" d="M899.285 256l39.381 39.083v476.501l-39.381 39.083h-774.571l-39.381-39.083v-476.501l39.381-39.083h774.571zM853.461 511.573h-681.6v213.632h681.6v-213.632zM693.205 618.411h76.459l34.901 32.213-34.901 32.213h-128.896l-34.901-32.213 34.901-32.213h52.437zM853.461 341.248h-681.387v86.357l681.387-2.347v-84.053z"></path></svg>
                           <p>Settings</p>
                         </div>
-                        <div className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded transition text-xl">
+                        <div className="flex items-center space-x-3 px-2 py-3 hover:bg-blue-100 rounded transition text-xl">
                           <svg width="23px" height="23px" viewBox="0 0 1024 1024" data-aut-id="icon" class="" fill-rule="evenodd"><path class="rui-w4DG7" d="M128 85.333l-42.667 42.667v768l42.667 42.667h768l42.667-42.667v-213.333l-42.667-42.667-42.667 42.667v170.667h-682.667v-682.667h682.667v170.667l42.667 42.667 42.667-42.667v-213.333l-42.667-42.667h-768zM494.336 298.667l-183.168 183.168v60.331l183.168 183.168h60.331v-60.331l-110.336-110.336h323.669l42.667-42.667-42.667-42.667h-323.669l110.336-110.336v-60.331h-60.331z"></path></svg>
                           <div className="flex items-center "><LogoutButton /></div>
                         </div>
