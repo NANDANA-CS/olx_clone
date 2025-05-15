@@ -7,9 +7,10 @@ const olx_router=express.Router()
 
 // olx_router.get('/getuser',getUser)
 olx_router.post('/signup',signUp)
+olx_router.post('/bikes',upload.array('file'),Bike)
 olx_router.post('/post',upload.array('file'),addProducts)
 olx_router.get("/getproducts",getProducts)
 olx_router.get('/products/:id',previewProduct)
-olx_router.post('/bikes',upload.array('file'),Bike)
+
 
 export default olx_router

@@ -12,15 +12,15 @@ const Home = () => {
   const productsPerPage = 4;
   const navigate = useNavigate();
 
-  // Dynamic navbar height adjustment
+  
   useEffect(() => {
     const adjustContentPadding = () => {
       const navbar = document.querySelector('nav');
       const homeContainer = document.querySelector('.home');
       if (navbar && homeContainer) {
         const navbarHeight = navbar.offsetHeight;
-        console.log('Navbar Height:', navbarHeight); // Debug log
-        homeContainer.style.paddingTop = `${navbarHeight + 16}px`; // Add 16px buffer
+        console.log('Navbar Height:', navbarHeight)
+        homeContainer.style.paddingTop = `${navbarHeight + 16}px`; 
       } else {
         console.log('Navbar or Home container not found');
       }
