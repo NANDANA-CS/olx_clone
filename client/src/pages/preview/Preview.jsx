@@ -11,6 +11,8 @@ const Preview = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const [isWishlisted, setIsWishlisted] = useState(false); 
+  const userId = localStorage.getItem('id'); 
 
   useEffect(() => {
     const adjustContentPadding = () => {
@@ -18,8 +20,8 @@ const Preview = () => {
       const contentContainer = document.querySelector('.preview-content');
       if (navbar && contentContainer) {
         const navbarHeight = navbar.offsetHeight;
-        console.log('Navbar Height:', navbarHeight); 
-        contentContainer.style.paddingTop = `${navbarHeight + 16}px`; 
+        console.log('Navbar Height:', navbarHeight);
+        contentContainer.style.paddingTop = `${navbarHeight + 16}px`;
       } else {
         console.log('Navbar or Content container not found');
       }
@@ -33,16 +35,30 @@ const Preview = () => {
 
   useEffect(() => {
     console.log('Product ID from params:', productId);
-    const fetchProduct = async () => {
+    const fetchProductAndWishlist = async () => {
       if (!productId) {
         setError('Invalid product ID');
         setLoading(false);
         return;
       }
       try {
-        const response = await axios.get(`http://localhost:3000/api/products/${productId}`);
-        console.log('Fetched product:', response.data);
-        setProduct(response.data);
+        
+        const productResponse = await axios.get(`http://localhost:3000/api/products/${productId}`);
+        console.log('Fetched product:', productResponse.data);
+        setProduct(productResponse.data);
+        if (userId) {
+          try {
+            const wishlistResponse = await axios.get(`http://localhost:3000/api/user/${userId}`, {
+              headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+            });
+            const wishlist = wishlistResponse.data.wishlist || [];
+            const wishlistIds = wishlist.map((item) => (typeof item === 'string' ? item : item._id));
+            setIsWishlisted(wishlistIds.includes(String(productId)));
+          } catch (wishlistError) {
+            console.error('Error fetching wishlist:', wishlistError);
+          }
+        }
+
         setLoading(false);
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -51,8 +67,36 @@ const Preview = () => {
       }
     };
 
-    fetchProduct();
-  }, [productId]);
+    fetchProductAndWishlist();
+  }, [productId, userId]);
+
+  const handleWishlistClick = async (e) => {
+    e.stopPropagation(); // Prevent navigation to product page
+    if (!userId) {
+      alert('Please log in to add items to your wishlist');
+      navigate('/login'); // Adjust the login route as per your app
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/api/wishlist',
+        { userId, productId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      const updatedWishlist = response.data.wishlist.map((item) =>
+        typeof item === 'string' ? item : item._id
+      );
+      setIsWishlisted(updatedWishlist.includes(String(productId)));
+    } catch (error) {
+      console.error('Error toggling wishlist:', error);
+      alert('Failed to update wishlist');
+    }
+  };
 
   const handleNextImage = () => {
     if (product && product.pic) {
@@ -114,7 +158,6 @@ const Preview = () => {
       <Navbar />
       <div className="flex-1 bg-gray-100 min-h-screen preview-content pt-[120px] xs:pt-[140px] sm:pt-[160px] lg:pt-[180px] pb-4 xs:pb-6 sm:pb-8">
         <div className="max-w-7xl mx-auto px-2 xs:px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
           <div className="flex items-center text-xs xs:text-sm sm:text-base text-gray-500 mb-3 xs:mb-4 sm:mb-5">
             <span
               className="cursor-pointer hover:text-blue-900 truncate"
@@ -153,7 +196,7 @@ const Preview = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 xs:gap-6 sm:gap-8">
             {/* Image Gallery */}
-            <div className="w-full sm:w-1/2 bg-white p-2 xs:p-3 sm:p-4 rounded-lg shadow-md relative">
+            <div className="w-full sm:w-1/2 bg-black p-2 xs:p-4 sm:p-6 shadow-md relative">
               <div className="relative">
                 <img
                   className="w-full h-auto max-h-[300px] xs:max-h-[400px] sm:max-h-[500px] object-contain"
@@ -189,14 +232,18 @@ const Preview = () => {
                   </>
                 )}
               </div>
-              {/* Like Button */}
-              <div className="absolute top-2 xs:top-3 sm:top-4 right-2 xs:right-3 sm:right-4">
+              {/* Wishlist Button */}
+              <div className="absolute top-2 xs:top-3 sm:top-4 right-2 xs:right-3 sm:right-4 bg-white rounded-full size-10 content-center">
                 <img
-                  src="/images/wlike.jpg"
-                  alt="Like"
-                  className="h-6 xs:h-7 sm:h-8 cursor-pointer hover:opacity-75 transition-opacity"
-                  onClick={() => alert('Like functionality not implemented')}
-                  aria-label="Like product"
+                  src={
+                    isWishlisted
+                      ? '/images/heartfill.png'
+                      : '/images/bc65b85d-d193-4d92-a00e-09bfc4299345.svg'
+                  }
+                  alt={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                  className="h-6 xs:h-7 sm:h-8 cursor-pointer hover:opacity-75 mx-auto"
+                  onClick={handleWishlistClick}
+                  aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                 />
               </div>
             </div>
@@ -222,7 +269,7 @@ const Preview = () => {
                   <div>
                     <p>
                       <strong>Posted:</strong>{' '}
-                      {new Date(product.createdAt).toLocaleDateString() || 'N/A'}
+                     {product.date ? new Date(product.date).toLocaleDateString() : 'N/A'}
                     </p>
                   </div>
                 </div>
@@ -238,11 +285,11 @@ const Preview = () => {
               <div className="border-t border-gray-200 pt-3 xs:pt-4 sm:pt-5">
                 <h2 className="text-base xs:text-lg sm:text-xl font-semibold text-gray-800 mb-1 xs:mb-2">Seller Information</h2>
                 <p className="text-sm xs:text-base sm:text-base text-gray-600">
-                  <strong>Seller:</strong> {product.sellerName || 'Anonymous'}
+                  <strong>Seller:</strong> {product.user_id?.username || 'Anonymous'}
                 </p>
                 <div className="flex gap-2 xs:gap-3 sm:gap-4 mt-3 xs:mt-4">
                   <button
-                    className="bg-white text-blue-900 border border-blue-900 font-semibold py-1 xs:py-1.5 sm:py-2 px-4 xs:px-5 sm:px-6 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="bg-white text-blue-900 border border-blue-900 font-semibold py-1 xs:py-1.5 sm:py-2 px-4 xs:px-5 sm:px-6 rounded hover:border-5 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onClick={() => alert('Chat functionality not implemented')}
                     aria-label="Chat with seller"
                   >

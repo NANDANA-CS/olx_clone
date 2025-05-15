@@ -69,7 +69,7 @@ const Navbar = ({ onSearch }) => {
         <div className="flex flex-col sm:flex-row items-center h-auto sm:h-20 gap-4 sm:gap-11 py-4 sm:py-0">
           <div className="flex items-center justify-between w-full sm:w-auto gap-4 sm:gap-20">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0" onClick={()=>navigate('/')}>
               <img
                 src="/images/olx_logo_2025.svg"
                 alt="Logo"
@@ -138,11 +138,13 @@ const Navbar = ({ onSearch }) => {
           {/* Right Side */}
           <div className="flex items-center space-x-4 sm:space-x-8">
             {/* Like Icon */}
-            <img
+           <div onClick={()=>navigate('/wishlist')}>
+             <img
               src="/images/bc65b85d-d193-4d92-a00e-09bfc4299345.svg"
               alt="Like"
               className="h-8 cursor-pointer hover:opacity-75 transition-opacity"
             />
+           </div>
 
             {/* User Profile/Dropdown or Login Button */}
             {isAuthenticated ? (
