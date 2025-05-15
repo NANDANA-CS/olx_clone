@@ -15,7 +15,7 @@ const Bike = () => {
     description: '',
     price: '',
   });
-  const [images, setImages] = useState(Array(20).fill(null));
+  const [images, setImages] = useState(Array(20).fill({file:null,url:null}));
   const [location, setLocation] = useState({
     state: '',
     city: '',
@@ -122,7 +122,7 @@ const Bike = () => {
       const imageUrl = URL.createObjectURL(file);
       setImages((prev) => {
         const newImages = [...prev];
-        newImages[index] = imageUrl;
+        newImages[index] = {file,url:imageUrl}
         return newImages;
       });
     }
@@ -131,7 +131,7 @@ const Bike = () => {
   const removeImage = (index) => {
     setImages((prev) => {
       const newImages = [...prev];
-      newImages[index] = null;
+      newImages[index] = {file:null,url:null};
       return newImages;
     });
   };
@@ -148,7 +148,11 @@ const Bike = () => {
   };
 
   const handlePostAd = () => {
-    console.log('Posting ad:', formData, images.filter((img) => img !== null), location);
+    console.log('Posting ad:', {
+      formData, 
+      images:images.filter((img) => img !== null), 
+      location
+    });
   };
 
   return (
@@ -349,10 +353,10 @@ const Bike = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
                   {images.map((image, index) => (
                     <div key={index} className="relative">
-                      {image ? (
+                      {image.url ? (
                         <div>
                           <img
-                            src={image}
+                            src={image.url}
                             alt={`Uploaded ${index + 1}`}
                             className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-md"
                           />

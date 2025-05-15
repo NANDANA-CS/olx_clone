@@ -153,3 +153,69 @@ export const previewProduct=async(req,res)=>{
     res.status(500).json({ error: 'Server error' })
   }
 }
+
+
+
+export const Bike=async(req,res)=>{
+  try {
+    const {
+      brand,
+      bikeName,
+      year,
+      fuel,
+      transmission,
+      noOfOwners,
+      adTitle,
+      description,
+      price,
+      location,
+    } = req.body;
+
+    // Parse location if sent as a JSON string
+    const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location;
+
+    // Validate required fields
+    if (
+      !brand ||
+      !bikeName ||
+      !year ||
+      !fuel ||
+      !transmission ||
+      !noOfOwners ||
+      !adTitle ||
+      !description ||
+      !price ||
+      !parsedLocation.state ||
+      !parsedLocation.city ||
+      !parsedLocation.neighborhood
+    ) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    // Get uploaded image paths
+    const imagePaths = req.files.map((file) => `/uploads/${file.filename}`);
+
+    // Create new bike ad
+    const newBike = new Bike({
+      brand,
+      bikeName,
+      year,
+      fuel,
+      transmission,
+      noOfOwners,
+      adTitle,
+      description,
+      price,
+      images: imagePaths,
+      location: parsedLocation,
+    });
+
+    
+    await newBike.save();
+
+    res.status(201).json({ message: 'Bike ad posted successfully', bike: newBike });
+  } catch (error) {
+    console.error('Error posting bike ad:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+}
