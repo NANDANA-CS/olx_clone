@@ -178,7 +178,7 @@ const Home = () => {
                 />
               </div>
               <img
-                className="rounded-t-lg w-full h-40 sm:h-48 object-contain"
+                className="rounded-t-lg w-full h-40 sm:h-48 object-cover"
                 src={`http://localhost:3000/images/${product.pic[0] || 'default.jpg'}`}
                 alt={product.adtitle}
                 onError={(e) => (e.target.src = '/images/fallback.jpg')}

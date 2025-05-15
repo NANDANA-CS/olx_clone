@@ -145,6 +145,10 @@ const Navbar = ({ onSearch }) => {
               className="h-8 cursor-pointer hover:opacity-75 transition-opacity"
             />
            </div>
+           {/* notification */}
+           <div className='mt-0'>
+           <svg width="44px" height="30px" viewBox="0 0 1024 1024" data-aut-id="icon" class="" fill-rule="evenodd"><path class="rui-w4DG7" d="M730.855 763.955h-435.559c-0.833-87.945-2.676-279.627-2.676-289.496 0-119.351 98.911-216.463 220.498-216.463s220.455 97.112 220.455 216.463c0 10-1.843 201.594-2.72 289.496v0zM819.282 748.603c0.92-93.341 2.062-266.38 2.062-274.144 0-141.589-98.692-260.545-231.64-294.319 2.192-7.237 3.684-14.782 3.684-22.765 0-44.345-35.969-80.27-80.27-80.27-44.345 0-80.27 35.923-80.27 80.27 0 7.983 1.491 15.483 3.684 22.765-132.948 33.731-231.64 152.687-231.64 294.319 0 7.721 1.14 182.339 2.019 276.030l-90.27 36.581 0.92 64.609h316.032c3.729 40.881 37.679 73.031 79.523 73.031s75.794-32.151 79.523-73.031h312.962l1.754-64.523-88.078-38.556z"></path></svg>
+           </div>
 
             {/* User Profile/Dropdown or Login Button */}
             {isAuthenticated ? (
@@ -167,7 +171,7 @@ const Navbar = ({ onSearch }) => {
                 {isDropdownOpen && (
                   <div className="absolute top-12 right-0 w-64 sm:w-80 bg-white border border-gray-200 rounded-md shadow-md z-50">
                     {/* User Info */}
-                    <div className="flex items-center p-3 border-b border-gray-200">
+                    <div className="flex items-center px-8 py-5 border-b border-gray-200">
                       <img
                         src={user?.picture || '/images/blank-profile-picture-973460_1280.webp'}
                         alt="User Profile"
@@ -178,7 +182,7 @@ const Navbar = ({ onSearch }) => {
                       </span>
                     </div>
                     {/* Dropdown Items */}
-                    <div>
+                    <div className='px-5 mx-3'> 
                       <div className="cursor-pointer px-2 py-2 bg-blue-800 hover:bg-white hover:text-blue-800 border border-blue-800 text-white mx-4 text-center mb-4 mt-4 text-base sm:text-xl">
                         <p>View and Edit Profile</p>
                       </div>

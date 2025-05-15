@@ -10,6 +10,7 @@ const Wishlist = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     const fetchWishlistProducts = async () => {
       try {
         const userRes = await axios.get(`http://localhost:3000/api/user/${userId}`);
@@ -22,11 +23,10 @@ const Wishlist = () => {
         const productRes = await axios.get('http://localhost:3000/api/getproducts');
         const allProducts = productRes.data;
 
-        // Filter products and reverse to show the most recently added first
+
         const filtered = allProducts
           .filter((product) => wishlistIds.includes(String(product._id)))
           .sort((a, b) => {
-            // Sort based on the order in wishlistIds (reverse to get latest first)
             return wishlistIds.indexOf(String(b._id)) - wishlistIds.indexOf(String(a._id));
           });
 
@@ -113,13 +113,13 @@ const Wishlist = () => {
                   onError={(e) => (e.target.src = '/images/fallback.jpg')}
                 />
                 <div className="p-4 sm:p-5">
-                  <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
+                  <h5 className="mb-2 text-xl sm:text-4xl font-bold tracking-tight text-gray-900">
                     ₹ {product.price}
                   </h5>
-                  <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
+                  <p className="mb-3 font-normal text-gray-700 text-sm sm:text-2xl">
                     {product.adtitle}
                   </p>
-                  <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
+                  <p className="mb-3 font-normal text-gray-700 text-sm sm:text-md">
                     {product.location}
                   </p>
                 </div>

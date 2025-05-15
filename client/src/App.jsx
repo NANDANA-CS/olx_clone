@@ -27,6 +27,7 @@ const App = () => {
             <Route path='/laptop' Component={Laptop}/>
             <Route path='/preview/:productId' Component={Preview}/>
             <Route path='/wishlist' Component={Wishlist}/>
+            {/* <Route path='/edit' Component={Edit}/> */}
            
         </Routes>
       </BrowserRouter>

@@ -156,7 +156,7 @@ const Preview = () => {
   return (
     <>
       <Navbar />
-      <div className="flex-1 bg-gray-100 min-h-screen preview-content pt-[120px] xs:pt-[140px] sm:pt-[160px] lg:pt-[180px] pb-4 xs:pb-6 sm:pb-8">
+      <div className="flex-1 bg-gray-100 min-h-screen preview-content pt-[240px] xs:pt-[140px] sm:pt-[160px] lg:pt-[180px] pb-4 xs:pb-6 sm:pb-8">
         <div className="max-w-7xl mx-auto px-2 xs:px-4 sm:px-6 lg:px-8">
           <div className="flex items-center text-xs xs:text-sm sm:text-base text-gray-500 mb-3 xs:mb-4 sm:mb-5">
             <span
@@ -249,15 +249,15 @@ const Preview = () => {
             </div>
 
             {/* Product Details */}
-            <div className="w-full sm:w-1/2 space-y-3 xs:space-y-4 sm:space-y-6">
-              <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+            <div className="w-full sm:w-1/2 space-y-3 xs:space-y-4 sm:space-y-6 text-xl">
+              <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900">
                 {product.adtitle}
               </h1>
-              <p className="text-lg xs:text-xl sm:text-2xl font-semibold text-gray-900">₹ {product.price}</p>
-              <p className="text-sm xs:text-base sm:text-lg text-gray-700">{product.location}</p>
+              <p className="text-lg xs:text-xl sm:text-7xl font-semibold text-gray-900">₹ {product.price}</p>
+              <p className="text-sm xs:text-base sm:text-3xl text-gray-700">{product.location}</p>
               <div className="border-t border-gray-200 pt-3 xs:pt-4 sm:pt-5">
-                <h2 className="text-base xs:text-lg sm:text-xl font-semibold text-gray-800 mb-1 xs:mb-2">Details</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 xs:gap-3 sm:gap-4 text-gray-600 text-sm xs:text-base">
+                <h2 className="text-base xs:text-lg sm:text-3xl font-semibold text-gray-800 mb-1 xs:mb-2">Details</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 xs:gap-3 sm:gap-4 text-gray-600 text-xl xs:text-base">
                   <div>
                     <p>
                       <strong>Category:</strong> {product.category || 'Not specified'}
@@ -275,16 +275,16 @@ const Preview = () => {
                 </div>
               </div>
               <div className="border-t border-gray-200 pt-3 xs:pt-4 sm:pt-5">
-                <h2 className="text-base xs:text-lg sm:text-xl font-semibold text-gray-800 mb-1 xs:mb-2">Description</h2>
-                <p className="text-sm xs:text-base sm:text-base text-gray-600 whitespace-pre-wrap">
+                <h2 className="text-base xs:text-lg sm:text-3xl font-semibold text-gray-800 mb-1 xs:mb-2 ">Description</h2>
+                <p className="text-sm xs:text-base sm:text-xl text-gray-600 whitespace-pre-wrap">
                   {product.description || 'No description available'}
                 </p>
               </div>
 
               {/* Seller Information */}
               <div className="border-t border-gray-200 pt-3 xs:pt-4 sm:pt-5">
-                <h2 className="text-base xs:text-lg sm:text-xl font-semibold text-gray-800 mb-1 xs:mb-2">Seller Information</h2>
-                <p className="text-sm xs:text-base sm:text-base text-gray-600">
+                <h2 className="text-base xs:text-lg sm:text-2xl font-semibold text-gray-800 mb-1 xs:mb-2">Seller Information</h2>
+                <p className="text-sm xs:text-base sm:text-lg text-gray-600">
                   <strong>Seller:</strong> {product.user_id?.username || 'Anonymous'}
                 </p>
                 <div className="flex gap-2 xs:gap-3 sm:gap-4 mt-3 xs:mt-4">
