@@ -12,15 +12,14 @@ const Preview = () => {
   const [error, setError] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
 
-  // Dynamic navbar height adjustment
   useEffect(() => {
     const adjustContentPadding = () => {
       const navbar = document.querySelector('nav');
       const contentContainer = document.querySelector('.preview-content');
       if (navbar && contentContainer) {
         const navbarHeight = navbar.offsetHeight;
-        console.log('Navbar Height:', navbarHeight); // Debug log
-        contentContainer.style.paddingTop = `${navbarHeight + 16}px`; // Add 16px buffer
+        console.log('Navbar Height:', navbarHeight); 
+        contentContainer.style.paddingTop = `${navbarHeight + 16}px`; 
       } else {
         console.log('Navbar or Content container not found');
       }

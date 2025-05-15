@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
@@ -9,26 +9,24 @@ const Home = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 4;
+  const [wishlist, setWishlist] = useState([]);
+  const productsPerPage = 8;
   const navigate = useNavigate();
 
-  
+  const userId = localStorage.getItem('id');
+
   useEffect(() => {
     const adjustContentPadding = () => {
       const navbar = document.querySelector('nav');
       const homeContainer = document.querySelector('.home');
       if (navbar && homeContainer) {
         const navbarHeight = navbar.offsetHeight;
-        console.log('Navbar Height:', navbarHeight)
-        homeContainer.style.paddingTop = `${navbarHeight + 16}px`; 
-      } else {
-        console.log('Navbar or Home container not found');
+        homeContainer.style.paddingTop = `${navbarHeight + 16}px`;
       }
     };
 
     adjustContentPadding();
     window.addEventListener('resize', adjustContentPadding);
-
     return () => window.removeEventListener('resize', adjustContentPadding);
   }, []);
 
@@ -36,7 +34,6 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/getproducts');
-        console.log('API Response:', response.data);
         setProducts(response.data);
         setFilteredProducts(response.data);
       } catch (error) {
@@ -44,8 +41,26 @@ const Home = () => {
       }
     };
 
+    const fetchWishlist = async () => {
+      if (userId) {
+        try {
+          const response = await axios.get(`http://localhost:3000/api/user/${userId}`);
+          const data = response.data.wishlist || [];
+
+          // Extract only product IDs if necessary
+          const wishlistIds = data.map((item) =>
+            typeof item === 'string' ? item : item._id
+          );
+          setWishlist(wishlistIds);
+        } catch (error) {
+          console.error('Error fetching wishlist:', error);
+        }
+      }
+    };
+
     fetchProducts();
-  }, []);
+    fetchWishlist();
+  }, [userId]);
 
   useEffect(() => {
     if (searchQuery.trim() === '') {
@@ -59,16 +74,40 @@ const Home = () => {
     setCurrentPage(1);
   }, [searchQuery, products]);
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
+  const wishlistIds = useMemo(() => wishlist.map(String), [wishlist]);
+
+  const handleSearch = (query) => setSearchQuery(query);
 
   const handleProductClick = (productId) => {
-    if (!productId) {
-      console.error('Product ID is undefined');
+    if (!productId) return;
+    navigate(`/preview/${productId}`);
+  };
+
+  const handleWishlistClick = async (productId) => {
+    if (!userId) {
+      alert('Please log in to add items to your wishlist');
       return;
     }
-    navigate(`/preview/${productId}`);
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/api/wishlist',
+        { userId, productId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+
+      const updatedWishlist = response.data.wishlist.map((item) =>
+        typeof item === 'string' ? item : item._id
+      );
+      setWishlist(updatedWishlist);
+    } catch (error) {
+      console.error('Error toggling wishlist:', error);
+      alert('Failed to update wishlist');
+    }
   };
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -125,9 +164,17 @@ const Home = () => {
             >
               <div>
                 <img
-                  src="/images/bc65b85d-d193-4d92-a00e-09bfc4299345.svg"
-                  alt="Like"
-                  className="absolute right-4 top-4 bg-white rounded-full p-2"
+                  src={
+                    wishlistIds.includes(String(product._id))
+                      ? '/images/heartfill.png'
+                      : '/images/bc65b85d-d193-4d92-a00e-09bfc4299345.svg'
+                  }
+                  alt="Wishlist"
+                  className="absolute right-4 top-4 bg-white rounded-full p-2 cursor-pointer size-10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWishlistClick(product._id);
+                  }}
                 />
               </div>
               <img

@@ -40,32 +40,50 @@ export const signUp = async (req, res) => {
 
 
 
+// export const getUser = async (req, res) => {
+//   console.log("getuser");
+//   const userId = req.params.id
+//   console.log("userid", userId);
+
+//   if (!userId) {
+//     return res.status(400).json({ message: 'invalid userid' })
+//   }
+
+//   try {
+//     const user = await userSchema.findOne({ id: userId })
+//     console.log(user)
+//     if (!user) {
+//       return res.status(400).json({ message: 'user not found' })
+//     }
+//   } catch (error) {
+//     console.log("error", error)
+//     res.status(500).json({ message: 'server error' })
+//   }
+
+// }
+
+
+
+
 export const getUser = async (req, res) => {
   console.log("getuser");
-  const userId = req.params.id
-  console.log("userid", userId);
+  const userId = req.params.id;
 
   if (!userId) {
-    return res.status(400).json({ message: 'invalid userid' })
+    return res.status(400).json({ message: 'Invalid user ID' });
   }
 
   try {
-    const user = await userSchema.findOne({ id: userId })
-    console.log(user)
+    const user = await userSchema.findById(userId).populate('wishlist'); // Populate wishlist with product details
     if (!user) {
-      return res.status(400).json({ message: 'user not found' })
+      return res.status(404).json({ message: 'User not found' });
     }
+    res.status(200).json(user);
   } catch (error) {
-    console.log("error", error)
-    res.status(500).json({ message: 'server error' })
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: 'Server error' });
   }
-
-}
-
-
-
-
-
+};
 
 
 
@@ -232,7 +250,7 @@ export const Bike = async (req, res) => {
       date: new Date(),
     }
     const data = await addSchema.create(newBike)
-    console.log(data, "new bike data");
+    console.log(data, "new bike");
 
     res.status(201).json({ message: 'Bike ad posted successfully', bike: newBike });
   } catch (error) {
@@ -240,3 +258,56 @@ export const Bike = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// Toggle product in wishlist
+export const toggleWishlist = async (req, res) => {
+  try {
+    const { userId, productId } = req.body;
+
+    if (!userId || !productId) {
+      return res.status(400).json({ message: "User ID and Product ID are required" });
+    }
+
+    const user = await userSchema.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const product = await addSchema.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Check if product is already in wishlist
+    const isInWishlist = user.wishlist.includes(productId);
+
+    if (isInWishlist) {
+      // Remove product from wishlist
+      user.wishlist = user.wishlist.filter((id) => id.toString() !== productId);
+    } else {
+      // Add product to wishlist
+      user.wishlist.push(productId);
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      message: isInWishlist ? "Product removed from wishlist" : "Product added to wishlist",
+      wishlist: user.wishlist,
+    });
+  } catch (error) {
+    console.error("Error toggling wishlist:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
