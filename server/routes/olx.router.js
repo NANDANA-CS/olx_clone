@@ -12,9 +12,9 @@ olx_router.post('/post',upload.array('file'),addProducts)
 olx_router.get("/getproducts",getProducts)
 olx_router.get('/products/:id',previewProduct)
 olx_router.post('/wishlist', toggleWishlist);
-olx_router.post('/mobile',upload.array('file'),Mobile)
 
 olx_router.put('/user/:id', updateUser)
-
 olx_router.post('/offer',offer)
+olx_router.post('/mobile', upload.array('file'), Mobile);
+
 export default olx_router

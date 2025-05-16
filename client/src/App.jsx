@@ -26,13 +26,14 @@ const App = () => {
             <Route path='/postadd' Component={Postadd}/>
             <Route path='/addcar' Component={Car}/>
             <Route path='/bike' Component={Bike}/>
-            <Route path='/mobile'Component={Mobile}/>
             <Route path='/laptop' Component={Laptop}/>
             <Route path='/preview/:productId' Component={Preview}/>
             <Route path='/wishlist' Component={Wishlist}/>
             <Route path='/edit' Component={Edit}/>
             <Route path="/category/:categoryName" element={<Categories />} />
             <Route path='/viewprofile' Component={Viewprofile}/>
+
+             <Route path='/mobile'Component={Mobile}/>
            
         </Routes>
       </BrowserRouter>

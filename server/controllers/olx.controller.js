@@ -231,68 +231,6 @@ export const Bike = async (req, res) => {
   }
 };
 
-// Mobile
-export const Mobile = async (req, res) => {
-  try {
-    console.log("inside mobile");
-    const files = req.files;
-    console.log("files", files);
-
-    const {
-      brand,
-      adTitle,
-      description,
-      price,
-      category,
-      email,
-      location,
-    } = req.body;
-
-    const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location;
-
-    if (
-      !brand ||
-      !adTitle ||
-      !description ||
-      !price ||
-      !category ||
-      !email ||
-      !parsedLocation.state ||
-      !parsedLocation.city ||
-      !parsedLocation.neighborhood ||
-      !files
-    ) {
-      return res.status(400).json({ error: 'All fields are required' });
-    }
-
-    const user = await userSchema.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
-    const images = files.map(file => file.filename);
-    const newMobileAd = {
-      adtitle: adTitle,
-      brand,
-      price,
-      description,
-      location: locationString,
-      category: category.toLowerCase(), 
-      pic: images,
-      user_id: user._id,
-      date: new Date(),
-    };
-
-    const data = await addSchema.create(newMobileAd);
-    console.log(data, "new mobile ad");
-
-    res.status(201).json({ message: 'Mobile ad posted successfully', mobile: newMobileAd });
-  } catch (error) {
-    console.error('Error posting mobile ad:', error);
-    res.status(500).json({ error: 'Server error' });
-  }
-};
-
 // toggleWishlist
 export const toggleWishlist = async (req, res) => {
   try {
@@ -453,3 +391,74 @@ export const offer = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+
+
+
+
+
+
+
+// Mobile
+ export const Mobile = async (req, res) => {
+     try {
+       console.log("inside mobile");
+       const files = req.files;
+       console.log("files", files);
+
+       const {
+         brand,
+         adTitle,
+         description,
+         price,
+         category,
+         email,
+         location,
+       } = req.body;
+
+       const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location;
+
+       if (
+         !brand ||
+         !adTitle ||
+         !description ||
+         !price ||
+         !category ||
+         !email ||
+         !parsedLocation.state ||
+         !parsedLocation.city ||
+         !parsedLocation.neighborhood ||
+         !files ||
+         files.length === 0
+       ) {
+         return res.status(400).json({ error: 'All fields and at least one image are required' });
+       }
+
+       const user = await userSchema.findOne({ email });
+       if (!user) {
+         return res.status(404).json({ message: "User not found" });
+       }
+       const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
+       const images = files.map(file => file.filename);
+       const newMobileAd = {
+         adtitle: adTitle,
+         brand,
+         price,
+         description,
+         location: locationString,
+         category: category.toLowerCase(),
+         pic: images,
+         user_id: user._id,
+         date: new Date(),
+       };
+
+       const data = await addSchema.create(newMobileAd);
+       console.log(data, "new mobile ad");
+
+       res.status(201).json({ message: 'Mobile ad posted successfully', mobile: newMobileAd });
+     } catch (error) {
+       console.error('Error posting mobile ad:', error);
+       res.status(500).json({ error: 'Server error' });
+     }
+   };
