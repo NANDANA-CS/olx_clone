@@ -194,10 +194,10 @@ const Preview = () => {
             <span className="text-gray-700 truncate">{product.adtitle}</span>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 xs:gap-6 sm:gap-8">
+          <div className=" flex-col sm:flex-row gap-4 xs:gap-6 sm:gap-8">
             {/* Image Gallery */}
-            <div className="w-full sm:w-1/2 bg-black p-2 xs:p-4 sm:p-6 shadow-md relative">
-              <div className="relative">
+            <div className="w-full sm:w-1/1 bg-white p-2 xs:p-4 sm:p-6 shadow-md relative mb-8">
+              <div className="relative ">
                 <img
                   className="w-full h-auto max-h-[300px] xs:max-h-[400px] sm:max-h-[500px] object-contain"
                   src={`http://localhost:3000/images/${product.pic[currentImage]}`}
@@ -272,6 +272,7 @@ const Preview = () => {
                      {product.date ? new Date(product.date).toLocaleDateString() : 'N/A'}
                     </p>
                   </div>
+                  <p>Add id: {product._id}</p>
                 </div>
               </div>
               <div className="border-t border-gray-200 pt-3 xs:pt-4 sm:pt-5">

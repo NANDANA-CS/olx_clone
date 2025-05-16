@@ -10,6 +10,8 @@ import Mobile from './pages/postadd/subpages/Mobile'
 import Laptop from './pages/postadd/subpages/Laptop'
 import Preview from './pages/preview/Preview'
 import Wishlist from './pages/wishlist/Wishlist'
+import Edit from './pages/edit/Edit'
+import Categories from './pages/categories/Categories'
 
 
 const App = () => {
@@ -27,7 +29,8 @@ const App = () => {
             <Route path='/laptop' Component={Laptop}/>
             <Route path='/preview/:productId' Component={Preview}/>
             <Route path='/wishlist' Component={Wishlist}/>
-            {/* <Route path='/edit' Component={Edit}/> */}
+            <Route path='/edit' Component={Edit}/>
+            <Route path="/category/:categoryName" element={<Categories />} />
            
         </Routes>
       </BrowserRouter>
