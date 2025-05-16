@@ -18,9 +18,6 @@ const app = express();
 const port = 3000;
 
 
-
-
-
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(cors());

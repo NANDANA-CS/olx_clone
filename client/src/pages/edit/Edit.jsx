@@ -110,8 +110,8 @@ const Edit = () => {
                 className="w-20 h-20 rounded-full mx-auto mb-3"
               />
               <button
-                onClick={() => navigate('/')}
-                className="text-blue-600 font-semibold border border-blue-600 py-2 px-4 rounded hover:bg-blue-50 transition"
+                onClick={() => navigate('/viewprofile')}
+               className="mt-4 bg-white text-blue-900 font-bold py-2 px-4 rounded hover:bg-white hover:border-4 border hover:border-blue-800 transition"
               >
                 View profile
               </button>

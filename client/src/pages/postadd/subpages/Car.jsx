@@ -307,7 +307,7 @@ const Car = () => {
                         'BMW', 'Jaguar', 'Mercedes Benz',
                         'Audi', 'Rolls Royce', 'Lamborghini',
                         'Ferrari', 'Bugatti', 'Nissan', 'Maruti Suzuki',
-                        'Toyota', 'Porsche', 'Ford'
+                        'Toyota', 'Porsche', 'Ford','LandRover'
                       ].map((brand) => (
                         <option key={brand} value={brand}>{brand}</option>
                       ))}

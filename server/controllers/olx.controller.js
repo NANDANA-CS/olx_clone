@@ -5,6 +5,22 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 
+
+
+
+const transporter = nodemailer.createTransport({
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  secure: false, // true for port 465, false for other ports
+  auth: {
+    user: "574a10109dd239",
+    pass: "466c3668f60968",
+  },
+});
+
+
+
+
 // signup
 export const signUp = async (req, res) => {
   try {
@@ -341,5 +357,99 @@ export const updateUser = async (req, res) => {
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+}
+
+
+export const offer = async (req, res) => {
+  try {
+    console.log("helooo")
+    const { userId, productId, offerPrice } = req.body;
+
+    if (!userId || !productId || !offerPrice) {
+      return res.status(400).json({ message: "User ID, Product ID, and Offer Price are required" });
+    }
+
+    const buyer = await userSchema.findById(userId);
+    if (!buyer) {
+      return res.status(404).json({ message: "Buyer not found" });
+    }
+
+    const product = await addSchema.findById(productId).populate('user_id', 'username email');
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    const seller = product.user_id;
+    if (!seller) {
+      return res.status(404).json({ message: "Seller not found" });
+    }
+
+    const originalPrice = parseFloat(product.price);
+    const offer = parseFloat(offerPrice);
+    const minPrice = originalPrice * 0.9;
+    const maxPrice = originalPrice * 1.1;
+
+    if (isNaN(offer) || offer < minPrice || offer > maxPrice) {
+      return res.status(400).json({ message: "Offer must be within 10% of the original price" });
+    }
+
+    // Email seller
+    const sellerMailOptions = {
+      from: buyer.email, 
+      to: seller.email, 
+      subject: `New Offer for ${product.adtitle}`,
+      html: `
+        <h2>New Offer Received!</h2>
+        <p>Dear ${seller.username},</p>
+        <p>You have received a new offer for your product:</p>
+        <ul>
+          <li><strong>Product:</strong> ${product.adtitle}</li>
+          <li><strong>Original Price:</strong> ₹${product.price}</li>
+          <li><strong>Offer Price:</strong> ₹${offerPrice}</li>
+          <li><strong>Buyer:</strong> ${buyer.username}</li>
+          <li><strong>Buyer Email:</strong> ${buyer.email}</li>
+        </ul>
+        <p>Please contact the buyer to discuss the offer further.</p>
+        <p>Best regards,<br>OLX</p>
+      `,
+    };
+
+    // Email  buyer
+    const buyerMailOptions = {
+      from: seller.email, 
+      to: buyer.email,
+      subject: `Offer Confirmation for ${product.adtitle}`,
+      html: `
+        <h2>Offer Proposal!</h2>
+        <p>Dear ${buyer.username},</p>
+        <p>You have successfully submitted an offer for the following product:</p>
+        <ul>
+          <li><strong>Product:</strong> ${product.adtitle}</li>
+          <li><strong>Original Price:</strong> ₹${product.price}</li>
+          <li><strong>Your Offer:</strong> ₹${offerPrice}</li>
+          <li><strong>Seller:</strong> ${seller.username}</li>
+          <li><strong>Seller Email:</strong> ${seller.email}</li>
+          <li><strong>Seller Location:</strong>${seller.location}</li>
+        </ul>
+        <p>The seller will contact you soon to discuss your offer.</p>
+        <p>Best regards,<br>OLX</p>
+      `,
+    };
+
+    // Send emails
+    try {
+      await transporter.sendMail(sellerMailOptions);
+      await transporter.sendMail(buyerMailOptions);
+    } catch (emailError) {
+      console.error("Error sending email:", emailError);
+      return res.status(500).json({ message: "Offer saved, but failed to send email notifications" });
+    }
+
+    
+    res.status(200).json({ message: "Offer submitted successfully and emails sent" });
+  } catch (error) {
+    console.error("Error processing offer:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

@@ -182,7 +182,7 @@ const Navbar = ({ onSearch }) => {
                     <div className="px-5 mx-3">
                       <div
                         className="cursor-pointer px-2 py-2 bg-blue-800 hover:bg-white hover:text-blue-800 border border-blue-800 text-white mx-4 text-center mb-4 mt-4 text-base sm:text-xl"
-                        onClick={() => navigate('/edit')}
+                        onClick={() => navigate('/viewprofile')}
                       >
                         <p>View and Edit Profile</p>
                       </div>

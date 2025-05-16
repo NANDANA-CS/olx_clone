@@ -4,9 +4,9 @@ import './index.css'
 import App from './App.jsx'
 import { Auth0Provider } from '@auth0/auth0-react'
 
-// const onRedirectCallback = (appState) => {
-//   window.history.replaceState({}, document.title, appState?.returnTo || "/");
-// };
+const onRedirectCallback = (appState) => {
+  window.history.replaceState({}, document.title, appState?.returnTo || "/");
+};
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -18,8 +18,8 @@ createRoot(document.getElementById('root')).render(
     }}
   
     // useRefreshTokens={true}
-    // cacheLocation='localstorage'
-    // onRedirectCallback={onRedirectCallback}
+    cacheLocation='localstorage'
+    onRedirectCallback={onRedirectCallback}
   >
     <App />
   </Auth0Provider>

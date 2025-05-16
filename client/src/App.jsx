@@ -12,6 +12,7 @@ import Preview from './pages/preview/Preview'
 import Wishlist from './pages/wishlist/Wishlist'
 import Edit from './pages/edit/Edit'
 import Categories from './pages/categories/Categories'
+import Viewprofile from './pages/viewprofile/Viewprofile'
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
             <Route path='/wishlist' Component={Wishlist}/>
             <Route path='/edit' Component={Edit}/>
             <Route path="/category/:categoryName" element={<Categories />} />
+            <Route path='/viewprofile' Component={Viewprofile}/>
            
         </Routes>
       </BrowserRouter>
