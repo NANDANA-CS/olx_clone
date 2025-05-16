@@ -42,7 +42,6 @@ const Preview = () => {
         return;
       }
       try {
-        
         const productResponse = await axios.get(`http://localhost:3000/api/products/${productId}`);
         console.log('Fetched product:', productResponse.data);
         setProduct(productResponse.data);
@@ -71,10 +70,10 @@ const Preview = () => {
   }, [productId, userId]);
 
   const handleWishlistClick = async (e) => {
-    e.stopPropagation(); // Prevent navigation to product page
+    e.stopPropagation();
     if (!userId) {
       alert('Please log in to add items to your wishlist');
-      navigate('/login'); // Adjust the login route as per your app
+      navigate('/login');
       return;
     }
 
@@ -96,6 +95,16 @@ const Preview = () => {
       console.error('Error toggling wishlist:', error);
       alert('Failed to update wishlist');
     }
+  };
+
+  const handleMakeOffer = () => {
+    if (!userId) {
+      alert('Please log in to make an offer');
+      navigate('/login');
+      return;
+    }
+    alert('Make Offer functionality not implemented');
+    // Add logic to open a modal or navigate to an offer submission page
   };
 
   const handleNextImage = () => {
@@ -194,10 +203,10 @@ const Preview = () => {
             <span className="text-gray-700 truncate">{product.adtitle}</span>
           </div>
 
-          <div className=" flex-col sm:flex-row gap-4 xs:gap-6 sm:gap-8">
+          <div className="flex-col sm:flex-row gap-4 xs:gap-6 sm:gap-8">
             {/* Image Gallery */}
             <div className="w-full sm:w-1/1 bg-white p-2 xs:p-4 sm:p-6 shadow-md relative mb-8">
-              <div className="relative ">
+              <div className="relative">
                 <img
                   className="w-full h-auto max-h-[300px] xs:max-h-[400px] sm:max-h-[500px] object-contain"
                   src={`http://localhost:3000/images/${product.pic[currentImage]}`}
@@ -269,14 +278,13 @@ const Preview = () => {
                   <div>
                     <p>
                       <strong>Posted:</strong>{' '}
-                     {product.date ? new Date(product.date).toLocaleDateString() : 'N/A'}
+                      {product.date ? new Date(product.date).toLocaleDateString() : 'N/A'}
                     </p>
                   </div>
-                  <p>Add id: {product._id}</p>
                 </div>
               </div>
               <div className="border-t border-gray-200 pt-3 xs:pt-4 sm:pt-5">
-                <h2 className="text-base xs:text-lg sm:text-3xl font-semibold text-gray-800 mb-1 xs:mb-2 ">Description</h2>
+                <h2 className="text-base xs:text-lg sm:text-3xl font-semibold text-gray-800 mb-1 xs:mb-2">Description</h2>
                 <p className="text-sm xs:text-base sm:text-xl text-gray-600 whitespace-pre-wrap">
                   {product.description || 'No description available'}
                 </p>
@@ -295,6 +303,13 @@ const Preview = () => {
                     aria-label="Chat with seller"
                   >
                     Chat with Seller
+                  </button>
+                  <button
+                    className="bg-blue-900 text-white font-semibold py-1 xs:py-1.5 sm:py-2 px-4 xs:px-5 sm:px-6 rounded hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onClick={handleMakeOffer}
+                    aria-label="Make an offer"
+                  >
+                    Make an Offer
                   </button>
                 </div>
               </div>
