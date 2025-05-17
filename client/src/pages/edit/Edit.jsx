@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
@@ -14,34 +13,46 @@ const Edit = () => {
     email: '',
     phone: '',
     about: '',
+    profilepicture: '',
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      setFormData({
-        username: user.name || '',
-        email: user.email || '',
-        phone: '',
-        about: '',
-      });
       const fetchUserData = async () => {
         try {
           const userId = localStorage.getItem('id');
-          console.log('Fetching user data for ID:', userId);
           if (userId) {
             const response = await axios.get(`http://localhost:3000/api/user/${userId}`);
-            console.log('User data response:', response.data);
+            const dbData = response.data;
             setFormData({
-              username: response.data.username || user.name || '',
-              email: response.data.email || user.email || '',
-              phone: response.data.phone || '',
-              about: response.data.about || '',
+              username: dbData.username || user.name || '',
+              email: dbData.email || user.email || '',
+              phone: dbData.phone || '',
+              about: dbData.about || '',
+              profilepicture: dbData.profilepicture || user.picture || '/images/blank-profile-picture-973460_1280.webp',
+            });
+          } else {
+            // Fallback to Auth0 if no userId
+            setFormData({
+              username: user.name || '',
+              email: user.email || '',
+              phone: '',
+              about: '',
+              profilepicture: user.picture || '/images/blank-profile-picture-973460_1280.webp',
             });
           }
         } catch (err) {
           console.error('Detailed error fetching user data:', err.response || err);
+          // Fallback to Auth0 on error
+          setFormData({
+            username: user.name || '',
+            email: user.email || '',
+            phone: '',
+            about: '',
+            profilepicture: user.picture || '/images/blank-profile-picture-973460_1280.webp',
+          });
           setError('Failed to fetch user data.');
         }
       };
@@ -74,18 +85,19 @@ const Edit = () => {
         email: formData.email,
         phone: formData.phone || null,
         about: formData.about || null,
+        profilepicture: formData.profilepicture || null,
       });
 
-      setSuccess('Profile updated successfully!')
-      setTimeout(() => navigate('/'), 2000)
+      setSuccess('Profile updated successfully!');
+      setTimeout(() => navigate('/viewprofile'), 2000);
     } catch (err) {
-      console.error('Error updating profile:', err.response || err)
-      setError('Failed to update profile. Please try again.')
+      console.error('Error updating profile:', err.response || err);
+      setError('Failed to update profile. Please try again.');
     }
   };
 
   const handleCancel = () => {
-    navigate('/')
+    navigate('/viewprofile');
   };
 
   if (!isAuthenticated) {
@@ -105,13 +117,13 @@ const Edit = () => {
           <div className="w-full lg:w-1/3">
             <div className="border rounded p-4 text-center">
               <img
-                src={user?.picture || '/images/blank-profile-picture-973460_1280.webp'}
+                src={formData.profilepicture}
                 alt="Profile"
                 className="w-20 h-20 rounded-full mx-auto mb-3"
               />
               <button
                 onClick={() => navigate('/viewprofile')}
-               className="mt-4 bg-white text-blue-900 font-bold py-2 px-4 rounded hover:bg-white hover:border-4 border hover:border-blue-800 transition"
+                className="mt-4 bg-white text-blue-900 font-bold py-2 px-4 rounded hover:bg-white hover:border-4 border hover:border-blue-800 transition"
               >
                 View profile
               </button>
@@ -172,7 +184,6 @@ const Edit = () => {
                     className="border rounded w-full h-12 px-4"
                     placeholder="+91 Phone Number"
                   />
-                 
                 </div>
 
                 <div>
@@ -183,13 +194,10 @@ const Edit = () => {
                     disabled
                     className="border rounded w-full h-12 px-4 bg-gray-100 text-gray-700 cursor-not-allowed"
                   />
-                  
                 </div>
               </div>
 
-            
-
-              {/* e and s  */}
+              {/* Error and Success Messages */}
               {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               {success && <p className="text-green-600 text-sm mb-4">{success}</p>}
 
