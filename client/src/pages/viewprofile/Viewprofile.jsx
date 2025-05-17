@@ -30,8 +30,8 @@ const Viewprofile = () => {
    <>
    <Navbar/>
     <div className="max-w-7xl mx-auto px-4 py-10 mt-45">
-      <div className="flex flex-col sm:flex-row items-start justify-between bg-white shadow-md p-6 rounded-md">
-        {/* Left Panel - Profile Info */}
+      <div className="flex flex-col sm:flex-row items-start justify-between bg-white  p-6 rounded-md">
+        {/* Profile Info */}
         <div className="flex flex-col items-center sm:items-start gap-4 sm:w-1/2">
           <div className="">
             <img src={user.picture} alt="" className='rounded-full' />
@@ -50,10 +50,10 @@ const Viewprofile = () => {
           </div>
         </div>
 
-        {/* Right Panel - My Ads Empty State */}
+        {/*  edir side */}
         <div className="flex flex-col items-center justify-center text-center mt-10 sm:mt-0 sm:w-1/2">
           <img
-            src="/webp/no-publications.webp" 
+            src="/images/edit-side.webp" 
             alt="No Ads"
             className="w-40 mb-4"
           />

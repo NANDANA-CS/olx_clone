@@ -85,7 +85,7 @@ const Edit = () => {
   };
 
   const handleCancel = () => {
-    navigate('/'); // Redirect back to home without saving
+    navigate('/')
   };
 
   if (!isAuthenticated) {
@@ -99,9 +99,9 @@ const Edit = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8 pt-40">
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8 pt-40 mt-25">
         <div className="max-w-5xl w-full flex flex-col lg:flex-row gap-10">
-          {/* Sidebar - Profile Picture + View Button */}
+          {/* Sidebar */}
           <div className="w-full lg:w-1/3">
             <div className="border rounded p-4 text-center">
               <img
@@ -123,7 +123,7 @@ const Edit = () => {
             <div className="border rounded p-6 bg-white shadow">
               <h2 className="text-2xl font-semibold mb-6">Edit Profile</h2>
 
-              {/* Section: Basic Information */}
+              {/* Basic Info */}
               <div className="mb-6">
                 <h3 className="text-md font-semibold mb-2">Basic information</h3>
                 <div className="flex items-start gap-4 mb-4">
@@ -158,7 +158,7 @@ const Edit = () => {
                 />
               </div>
 
-              {/* Contact Information */}
+              {/* Contact Info */}
               <div className="mb-6">
                 <h3 className="text-md font-semibold mb-2">Contact information</h3>
 
@@ -172,7 +172,7 @@ const Edit = () => {
                     className="border rounded w-full h-12 px-4"
                     placeholder="+91 Phone Number"
                   />
-                  <p className="text-green-600 text-sm mt-1">Yay! Your number is verified.</p>
+                 
                 </div>
 
                 <div>
@@ -183,29 +183,27 @@ const Edit = () => {
                     disabled
                     className="border rounded w-full h-12 px-4 bg-gray-100 text-gray-700 cursor-not-allowed"
                   />
-                  <p className="text-gray-400 text-xs mt-1">
-                    Your email is never shared externally.
-                  </p>
+                  
                 </div>
               </div>
 
             
 
-              {/* Error and Success  */}
+              {/* e and s  */}
               {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               {success && <p className="text-green-600 text-sm mb-4">{success}</p>}
 
               {/* Action Buttons */}
-              <div className="flex justify-end gap-4 mt-8">
+              <div className="flex justify-between gap-4 mt-8">
                 <button
                   onClick={handleCancel}
-                  className="border border-gray-400 text-gray-700 px-4 py-2 rounded hover:bg-gray-100"
+                  className="underline underline-offset-4 text-gray-700 px-4 py-2 rounded hover:bg-gray-100"
                 >
                   Discard
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="bg-blue-700 text-white px-5 py-2 rounded font-semibold hover:bg-blue-600 transition"
+                  className="bg-blue-900 text-white px-5 py-2 rounded font-semibold hover:bg-blue-800 transition"
                 >
                   Save changes
                 </button>

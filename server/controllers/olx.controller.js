@@ -102,7 +102,7 @@ export const previewProduct = async (req, res) => {
   }
 };
 
-// addProducts
+// car
 export const addProducts = async (req, res) => {
   try {
     console.log("addproooooo");
@@ -230,6 +230,134 @@ export const Bike = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+
+
+
+// Mobile
+export const Mobile = async (req, res) => {
+  try {
+    console.log("inside mobile");
+    const files = req.files;
+    console.log("files", files);
+
+    const {
+      brand,
+      adTitle,
+      description,
+      price,
+      category,
+      email,
+      location,
+    } = req.body;
+
+    const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location;
+
+    if (
+      !brand ||
+      !adTitle ||
+      !description ||
+      !price ||
+      !category ||
+      !email ||
+      !parsedLocation.state ||
+      !parsedLocation.city ||
+      !parsedLocation.neighborhood ||
+      !files ||
+      files.length === 0
+    ) {
+      return res.status(400).json({ error: 'All fields and at least one image are required' });
+    }
+
+    const user = await userSchema.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
+    const images = files.map(file => file.filename);
+    const newMobileAd = {
+      adtitle: adTitle,
+      brand,
+      price,
+      description,
+      location: locationString,
+      category: category.toLowerCase(),
+      pic: images,
+      user_id: user._id,
+      date: new Date(),
+    };
+
+    const data = await addSchema.create(newMobileAd);
+    console.log(data, "new mobile ad");
+
+    res.status(201).json({ message: 'Mobile ad posted successfully', mobile: newMobileAd });
+  } catch (error) {
+    console.error('Error posting mobile ad:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
+
+// lap
+export const Laptop = async (req, res) => {
+  try {
+    console.log("Inside laptop controller")
+    const files = req.files
+    console.log("Files received:", files)
+
+    const { brand, adTitle, description, price, category, email, location } = req.body
+    const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location
+
+
+    if (
+      !brand ||
+      !adTitle ||
+      !description ||
+      !price ||
+      !category ||
+      !email ||
+      !parsedLocation?.state ||
+      !parsedLocation?.city ||
+      !parsedLocation?.neighborhood ||
+      !files ||
+      files.length === 0
+    ) {
+      return res.status(400).json({ error: 'All fields and at least one image are required' });
+    }
+
+    const user = await userSchema.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
+    const images = files.map(file => file.filename);
+
+    const newLapAd = {
+      adtitle: adTitle,
+      brand,
+      price: parseFloat(price),
+      description,
+      location: locationString,
+      category: category.toLowerCase(),
+      pic: images,
+      user_id: user._id,
+      date: new Date(),
+    }
+
+    const data = await addSchema.create(newLapAd)
+    console.log("New laptop ad created:", data)
+
+    res.status(201).json({ message: 'Laptop ad posted successfully', lap: newLapAd })
+  } catch (error) {
+    console.error('Error posting laptop ad:', error)
+    res.status(500).json({ error: 'Server error', details: error.message })
+  }
+}
+
+
+
+
 
 // toggleWishlist
 export const toggleWishlist = async (req, res) => {
@@ -370,148 +498,43 @@ export const offer = async (req, res) => {
           <li><strong>Seller Email:</strong> ${seller.email}</li>
           <li><strong>Seller Location:</strong>${product.location}</li>
         </ul>
-        <p>The seller will contact you soon to discuss your offer.</p>
+        <p>The seller will contact you soon to discuss your offer</p>
         <p>Best regards,<br>OLX</p>
       `,
-    };
+    }
 
 
     try {
-      await transporter.sendMail(sellerMailOptions);
-      await transporter.sendMail(buyerMailOptions);
+      await transporter.sendMail(sellerMailOptions)
+      await transporter.sendMail(buyerMailOptions)
     } catch (emailError) {
       console.error("Error sending email:", emailError);
-      return res.status(500).json({ message: "Offer saved, but failed to send email notifications" });
+      return res.status(500).json({ message: "Offer saved, but failed to send email notifications" })
+    }
+    res.status(200).json({ message: "Offer submitted successfully and emails sent" })
+  } catch (error) {
+    console.error("Error processing offer:", error)
+    res.status(500).json({ message: "Server error" })
+  }
+}
+
+
+// getuserads
+export const getUserAds = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    if (!userId) {
+      return res.status(400).json({ message: 'Invalid user ID' });
     }
 
+    const ads = await addSchema.find({ user_id: userId }).sort({ date: -1 });
+    if (!ads || ads.length === 0) {
+      return res.status(404).json({ message: 'No ads found for this user' });
+    }
 
-    res.status(200).json({ message: "Offer submitted successfully and emails sent" });
+    res.status(200).json(ads);
   } catch (error) {
-    console.error("Error processing offer:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error fetching user ads:", error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
-
-
-
-
-// Mobile
-export const Mobile = async (req, res) => {
-  try {
-    console.log("inside mobile");
-    const files = req.files;
-    console.log("files", files);
-
-    const {
-      brand,
-      adTitle,
-      description,
-      price,
-      category,
-      email,
-      location,
-    } = req.body;
-
-    const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location;
-
-    if (
-      !brand ||
-      !adTitle ||
-      !description ||
-      !price ||
-      !category ||
-      !email ||
-      !parsedLocation.state ||
-      !parsedLocation.city ||
-      !parsedLocation.neighborhood ||
-      !files ||
-      files.length === 0
-    ) {
-      return res.status(400).json({ error: 'All fields and at least one image are required' });
-    }
-
-    const user = await userSchema.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
-    const images = files.map(file => file.filename);
-    const newMobileAd = {
-      adtitle: adTitle,
-      brand,
-      price,
-      description,
-      location: locationString,
-      category: category.toLowerCase(),
-      pic: images,
-      user_id: user._id,
-      date: new Date(),
-    };
-
-    const data = await addSchema.create(newMobileAd);
-    console.log(data, "new mobile ad");
-
-    res.status(201).json({ message: 'Mobile ad posted successfully', mobile: newMobileAd });
-  } catch (error) {
-    console.error('Error posting mobile ad:', error);
-    res.status(500).json({ error: 'Server error' });
-  }
-}
-
-
-// lap
-export const Laptop = async (req, res) => {
-  try {
-    console.log("Inside laptop controller")
-    const files = req.files
-    console.log("Files received:", files)
-
-    const { brand, adTitle, description, price, category, email, location } = req.body
-    const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location
-
-
-    if (
-      !brand ||
-      !adTitle ||
-      !description ||
-      !price ||
-      !category ||
-      !email ||
-      !parsedLocation?.state ||
-      !parsedLocation?.city ||
-      !parsedLocation?.neighborhood ||
-      !files ||
-      files.length === 0
-    ) {
-      return res.status(400).json({ error: 'All fields and at least one image are required' });
-    }
-
-    const user = await userSchema.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
-    const images = files.map(file => file.filename);
-
-    const newLapAd = {
-      adtitle: adTitle,
-      brand,
-      price: parseFloat(price),
-      description,
-      location: locationString,
-      category: category.toLowerCase(),
-      pic: images,
-      user_id: user._id,
-      date: new Date(),
-    }
-
-    const data = await addSchema.create(newLapAd)
-    console.log("New laptop ad created:", data)
-
-    res.status(201).json({ message: 'Laptop ad posted successfully', lap: newLapAd })
-  } catch (error) {
-    console.error('Error posting laptop ad:', error)
-    res.status(500).json({ error: 'Server error', details: error.message })
-  }
-}
