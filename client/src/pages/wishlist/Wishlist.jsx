@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../../components/navbar/Navbar';
-import Footer from '../../components/footer/Footer';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import Navbar from '../../components/navbar/Navbar'
+import Footer from '../../components/footer/Footer'
 
 const Wishlist = () => {
   const [wishlistProducts, setWishlistProducts] = useState([]);
-  const userId = localStorage.getItem('id');
+  const [filteredWishlistProducts, setFilteredWishlistProducts] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
+  const userId = localStorage.getItem('id')
   const navigate = useNavigate();
 
   useEffect(() => {
-    
     const fetchWishlistProducts = async () => {
       try {
-        const userRes = await axios.get(`http://localhost:3000/api/user/${userId}`);
+        const userRes = await axios.get(`http://localhost:3000/api/user/${userId}`)
         const wishlist = userRes.data.wishlist || [];
 
         const wishlistIds = wishlist.map((item) =>
@@ -23,23 +24,34 @@ const Wishlist = () => {
         const productRes = await axios.get('http://localhost:3000/api/getproducts');
         const allProducts = productRes.data;
 
-
         const filtered = allProducts
           .filter((product) => wishlistIds.includes(String(product._id)))
           .sort((a, b) => {
             return wishlistIds.indexOf(String(b._id)) - wishlistIds.indexOf(String(a._id));
           });
 
-        setWishlistProducts(filtered);
+        setWishlistProducts(filtered)
+        setFilteredWishlistProducts(filtered)
       } catch (error) {
-        console.error('Error fetching wishlist products:', error);
+        console.error('Error fetching wishlist products:', error)
       }
-    };
+    }
 
     if (userId) {
       fetchWishlistProducts();
     }
-  }, [userId]);
+  }, [userId])
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredWishlistProducts(wishlistProducts);
+    } else {
+      const filtered = wishlistProducts.filter((product) =>
+        product.adtitle.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredWishlistProducts(filtered);
+    }
+  }, [searchQuery, wishlistProducts]);
 
   const handleProductClick = (productId) => {
     navigate(`/preview/${productId}`);
@@ -64,22 +76,35 @@ const Wishlist = () => {
       setWishlistProducts((prev) =>
         prev.filter((product) => updatedWishlistIds.includes(product._id))
       );
+      setFilteredWishlistProducts((prev) =>
+        prev.filter((product) => updatedWishlistIds.includes(product._id))
+      );
     } catch (error) {
       console.error('Error removing from wishlist:', error);
       alert('Failed to update wishlist');
     }
   };
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       <div className="home mx-4 sm:mx-8 lg:mx-32 pt-[240px] pb-6 sm:pb-10 mb-25">
         <h2 className="text-2xl sm:text-3xl mb-6 bg-white">WISHLIST</h2>
 
-        {wishlistProducts.length === 0 ? (
+        {filteredWishlistProducts.length === 0 ? (
           <div className="text-center">
-            <h1 className="text-gray-600 text-5xl mb-4">You haven't liked any ads yet!</h1>
-            <p className="text-gray-600 text-2xl mb-4">Like ads and share them with the world</p>
+            <h1 className="text-gray-600 text-5xl mb-4">
+              {searchQuery
+                ? 'No items match your search'
+                : "You haven't liked any ads yet!"}
+            </h1>
+            <p className="text-gray-600 text-2xl mb-4">
+              Like ads and share them with the world
+            </p>
             <button
               className="bg-white text-blue-900 border border-blue-900 font-semibold py-1 xs:py-1.5 sm:py-2 px-4 xs:px-5 sm:px-6 rounded hover:border-5 focus:outline-none focus:ring-2 focus:ring-blue-500"
               onClick={() => navigate('/')}
@@ -89,7 +114,7 @@ const Wishlist = () => {
           </div>
         ) : (
           <div className="cards grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mx-auto max-w-7xl">
-            {wishlistProducts.map((product, index) => (
+            {filteredWishlistProducts.map((product, index) => (
               <div
                 key={index}
                 className="relative w-full sm:w-[250px] md:w-[300px] h-auto min-h-[300px] bg-white border border-gray-200 rounded shadow-sm cursor-pointer hover:shadow-md transition-shadow"
@@ -130,7 +155,7 @@ const Wishlist = () => {
       </div>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Wishlist;
+export default Wishlist
