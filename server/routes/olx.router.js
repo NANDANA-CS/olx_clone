@@ -1,5 +1,5 @@
 import express from 'express'
-import { addProducts, Bike, getProducts, getUser,  Mobile,  offer,  previewProduct, signUp, toggleWishlist, updateUser } from '../controllers/olx.controller.js'
+import { addProducts, Bike, getProducts, getUser,  Laptop,  Mobile,  offer,  previewProduct, signUp, toggleWishlist, updateUser } from '../controllers/olx.controller.js'
 import upload from "../multer/multer.config.js"
 import auth from "../middleware/auth.js"
 
@@ -12,9 +12,10 @@ olx_router.post('/post',upload.array('file'),addProducts)
 olx_router.get("/getproducts",getProducts)
 olx_router.get('/products/:id',previewProduct)
 olx_router.post('/wishlist', toggleWishlist);
-
 olx_router.put('/user/:id', updateUser)
 olx_router.post('/offer',offer)
-olx_router.post('/mobile', upload.array('file'), Mobile);
+olx_router.post('/mobile', upload.array('file'), Mobile)
+
+olx_router.post('/lap', upload.array('file'), Laptop)
 
 export default olx_router

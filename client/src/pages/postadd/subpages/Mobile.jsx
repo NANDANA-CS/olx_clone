@@ -698,7 +698,7 @@ const Mobile = () => {
   const handleImageChange = (index, e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { // Limit to 5MB
+      if (file.size > 5 * 1024 * 1024) { 
         alert('Image size exceeds 5MB limit.');
         return;
       }
@@ -760,7 +760,6 @@ const Mobile = () => {
     try {
       const formDataToSend = new FormData();
 
-      // Append form data
       formDataToSend.append('brand', formData.brand);
       formDataToSend.append('adTitle', formData.adTitle);
       formDataToSend.append('description', formData.description);
@@ -769,7 +768,7 @@ const Mobile = () => {
       formDataToSend.append('email', localStorage.getItem('email') || 'user@example.com');
       formDataToSend.append('location', JSON.stringify(location));
 
-      // Append images
+
       const uploadedImages = images.filter((img) => img !== null);
       uploadedImages.forEach((image) => {
         formDataToSend.append('file', image.file);

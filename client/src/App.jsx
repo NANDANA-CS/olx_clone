@@ -32,8 +32,10 @@ const App = () => {
             <Route path='/edit' Component={Edit}/>
             <Route path="/category/:categoryName" element={<Categories />} />
             <Route path='/viewprofile' Component={Viewprofile}/>
+            <Route path='/mobile'Component={Mobile}/>
 
-             <Route path='/mobile'Component={Mobile}/>
+            <Route path='/lap' Component={Laptop}/>
+
            
         </Routes>
       </BrowserRouter>

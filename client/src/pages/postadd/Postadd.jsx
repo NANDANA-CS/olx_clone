@@ -14,12 +14,12 @@ const Postadd = () => {
   const subcategories = {
     Cars: ['Cars'],
     Bike: ['Bikes'],
-    'Electronics & Appliances': ['Mobile', 'Computers & Laptops'],
+    'Electronics & Appliances': ['Mobile', 'Laptops'],
   };
 
   const handleSubcategoryClick = (subcategory, event) => {
-    event.stopPropagation(); // Prevent event bubbling
-    console.log('Navigating to subcategory:', subcategory); // Debug log
+    event.stopPropagation();
+    console.log('Navigating to subcategory:', subcategory); 
     switch (subcategory) {
       case 'Cars':
         navigate('/addcar');
@@ -30,7 +30,7 @@ const Postadd = () => {
       case 'Mobile':
         navigate('/mobile');
         break;
-      case 'Computers & Laptops':
+      case 'Laptops':
         navigate('/laptop');
         break;
       default:
@@ -50,7 +50,7 @@ const Postadd = () => {
             CHOOSE A CATEGORY
           </div>
           
-          {/* Category selection - stacks on mobile, side by side on larger screens */}
+          {/* Category selection  */}
           <div className="flex flex-col md:flex-row">
             {/* Categories list */}
             <div className="w-full md:w-1/2 border-b md:border-b-0 md:border-r">

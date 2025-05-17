@@ -215,7 +215,7 @@ export const Bike = async (req, res) => {
       description,
       price,
       location: locationString,
-      category: category.toLowerCase(), 
+      category: category.toLowerCase(),
       pic: images,
       user_id: user._id,
       date: new Date(),
@@ -298,7 +298,7 @@ export const updateUser = async (req, res) => {
   }
 }
 
-
+// offer
 export const offer = async (req, res) => {
   try {
     console.log("helooo")
@@ -334,8 +334,8 @@ export const offer = async (req, res) => {
 
     // Email seller
     const sellerMailOptions = {
-      from: buyer.email, 
-      to: seller.email, 
+      from: buyer.email,
+      to: seller.email,
       subject: `New Offer for ${product.adtitle}`,
       html: `
         <h2>New Offer Received!</h2>
@@ -355,7 +355,7 @@ export const offer = async (req, res) => {
 
     // Email  buyer
     const buyerMailOptions = {
-      from: seller.email, 
+      from: seller.email,
       to: buyer.email,
       subject: `Offer Confirmation for ${product.adtitle}`,
       html: `
@@ -368,14 +368,14 @@ export const offer = async (req, res) => {
           <li><strong>Your Offer:</strong> ₹${offerPrice}</li>
           <li><strong>Seller:</strong> ${seller.username}</li>
           <li><strong>Seller Email:</strong> ${seller.email}</li>
-          <li><strong>Seller Location:</strong>${seller.location}</li>
+          <li><strong>Seller Location:</strong>${product.location}</li>
         </ul>
         <p>The seller will contact you soon to discuss your offer.</p>
         <p>Best regards,<br>OLX</p>
       `,
     };
 
-    // Send emails
+
     try {
       await transporter.sendMail(sellerMailOptions);
       await transporter.sendMail(buyerMailOptions);
@@ -384,7 +384,7 @@ export const offer = async (req, res) => {
       return res.status(500).json({ message: "Offer saved, but failed to send email notifications" });
     }
 
-    
+
     res.status(200).json({ message: "Offer submitted successfully and emails sent" });
   } catch (error) {
     console.error("Error processing offer:", error);
@@ -395,70 +395,123 @@ export const offer = async (req, res) => {
 
 
 
-
-
-
-
-
 // Mobile
- export const Mobile = async (req, res) => {
-     try {
-       console.log("inside mobile");
-       const files = req.files;
-       console.log("files", files);
+export const Mobile = async (req, res) => {
+  try {
+    console.log("inside mobile");
+    const files = req.files;
+    console.log("files", files);
 
-       const {
-         brand,
-         adTitle,
-         description,
-         price,
-         category,
-         email,
-         location,
-       } = req.body;
+    const {
+      brand,
+      adTitle,
+      description,
+      price,
+      category,
+      email,
+      location,
+    } = req.body;
 
-       const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location;
+    const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location;
 
-       if (
-         !brand ||
-         !adTitle ||
-         !description ||
-         !price ||
-         !category ||
-         !email ||
-         !parsedLocation.state ||
-         !parsedLocation.city ||
-         !parsedLocation.neighborhood ||
-         !files ||
-         files.length === 0
-       ) {
-         return res.status(400).json({ error: 'All fields and at least one image are required' });
-       }
+    if (
+      !brand ||
+      !adTitle ||
+      !description ||
+      !price ||
+      !category ||
+      !email ||
+      !parsedLocation.state ||
+      !parsedLocation.city ||
+      !parsedLocation.neighborhood ||
+      !files ||
+      files.length === 0
+    ) {
+      return res.status(400).json({ error: 'All fields and at least one image are required' });
+    }
 
-       const user = await userSchema.findOne({ email });
-       if (!user) {
-         return res.status(404).json({ message: "User not found" });
-       }
-       const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
-       const images = files.map(file => file.filename);
-       const newMobileAd = {
-         adtitle: adTitle,
-         brand,
-         price,
-         description,
-         location: locationString,
-         category: category.toLowerCase(),
-         pic: images,
-         user_id: user._id,
-         date: new Date(),
-       };
+    const user = await userSchema.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
+    const images = files.map(file => file.filename);
+    const newMobileAd = {
+      adtitle: adTitle,
+      brand,
+      price,
+      description,
+      location: locationString,
+      category: category.toLowerCase(),
+      pic: images,
+      user_id: user._id,
+      date: new Date(),
+    };
 
-       const data = await addSchema.create(newMobileAd);
-       console.log(data, "new mobile ad");
+    const data = await addSchema.create(newMobileAd);
+    console.log(data, "new mobile ad");
 
-       res.status(201).json({ message: 'Mobile ad posted successfully', mobile: newMobileAd });
-     } catch (error) {
-       console.error('Error posting mobile ad:', error);
-       res.status(500).json({ error: 'Server error' });
-     }
-   };
+    res.status(201).json({ message: 'Mobile ad posted successfully', mobile: newMobileAd });
+  } catch (error) {
+    console.error('Error posting mobile ad:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
+
+// lap
+export const Laptop = async (req, res) => {
+  try {
+    console.log("Inside laptop controller")
+    const files = req.files
+    console.log("Files received:", files)
+
+    const { brand, adTitle, description, price, category, email, location } = req.body
+    const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location
+
+
+    if (
+      !brand ||
+      !adTitle ||
+      !description ||
+      !price ||
+      !category ||
+      !email ||
+      !parsedLocation?.state ||
+      !parsedLocation?.city ||
+      !parsedLocation?.neighborhood ||
+      !files ||
+      files.length === 0
+    ) {
+      return res.status(400).json({ error: 'All fields and at least one image are required' });
+    }
+
+    const user = await userSchema.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const locationString = `${parsedLocation.neighborhood}, ${parsedLocation.city}, ${parsedLocation.state}`;
+    const images = files.map(file => file.filename);
+
+    const newLapAd = {
+      adtitle: adTitle,
+      brand,
+      price: parseFloat(price),
+      description,
+      location: locationString,
+      category: category.toLowerCase(),
+      pic: images,
+      user_id: user._id,
+      date: new Date(),
+    }
+
+    const data = await addSchema.create(newLapAd)
+    console.log("New laptop ad created:", data)
+
+    res.status(201).json({ message: 'Laptop ad posted successfully', lap: newLapAd })
+  } catch (error) {
+    console.error('Error posting laptop ad:', error)
+    res.status(500).json({ error: 'Server error', details: error.message })
+  }
+}

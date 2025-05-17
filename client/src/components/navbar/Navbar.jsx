@@ -369,9 +369,15 @@ const Navbar = ({ onSearch }) => {
             </p>
             <p
               className="cursor-pointer hover:text-[#002f34] transition whitespace-nowrap"
-              onClick={() => handleCategoryClick('electronics')}
+              onClick={() => handleCategoryClick('mobile')}
             >
-              Electronics
+             Mobiles
+            </p>
+             <p
+              className="cursor-pointer hover:text-[#002f34] transition whitespace-nowrap"
+              onClick={() => handleCategoryClick('laptop')}
+            >
+            Laptops
             </p>
           </div>
         </div>
