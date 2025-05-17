@@ -1,51 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Navbar from '../../components/navbar/Navbar';
-import Footer from '../../components/footer/Footer';
+import React, { useState, useEffect } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import Navbar from '../../components/navbar/Navbar'
+import Footer from '../../components/footer/Footer'
 
 const Edit = () => {
-  const { isAuthenticated, user } = useAuth0();
-  const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth0()
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     phone: '',
     about: '',
     profilepicture: '',
-  });
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  })
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   useEffect(() => {
     if (isAuthenticated && user) {
       const fetchUserData = async () => {
         try {
-          const userId = localStorage.getItem('id');
+          const userId = localStorage.getItem('id')
           if (userId) {
-            const response = await axios.get(`http://localhost:3000/api/user/${userId}`);
-            const dbData = response.data;
+            const response = await axios.get(`http://localhost:3000/api/user/${userId}`)
+            const dbData = response.data
             setFormData({
               username: dbData.username || user.name || '',
               email: dbData.email || user.email || '',
               phone: dbData.phone || '',
               about: dbData.about || '',
               profilepicture: dbData.profilepicture || user.picture || '/images/blank-profile-picture-973460_1280.webp',
-            });
+            })
           } else {
-            // Fallback to Auth0 if no userId
             setFormData({
               username: user.name || '',
               email: user.email || '',
               phone: '',
               about: '',
               profilepicture: user.picture || '/images/blank-profile-picture-973460_1280.webp',
-            });
+            })
           }
         } catch (err) {
-          console.error('Detailed error fetching user data:', err.response || err);
-          // Fallback to Auth0 on error
+          console.error('Detailed error fetching user data:', err.response || err)
           setFormData({
             username: user.name || '',
             email: user.email || '',
@@ -53,30 +51,30 @@ const Edit = () => {
             about: '',
             profilepicture: user.picture || '/images/blank-profile-picture-973460_1280.webp',
           });
-          setError('Failed to fetch user data.');
+          setError('Failed to fetch user data.')
         }
-      };
-      fetchUserData();
+      }
+      fetchUserData()
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+    e.preventDefault()
+    setError('')
+    setSuccess('')
 
     try {
-      const userId = localStorage.getItem('id');
+      const userId = localStorage.getItem('id')
       if (!userId) {
-        setError('User ID not found. Please log in again.');
+        setError('User ID not found. Please log in again.')
         return;
       }
 
@@ -88,13 +86,13 @@ const Edit = () => {
         profilepicture: formData.profilepicture || null,
       });
 
-      setSuccess('Profile updated successfully!');
-      setTimeout(() => navigate('/viewprofile'), 2000);
+      setSuccess('Profile updated successfully!')
+      setTimeout(() => navigate('/viewprofile'), 2000)
     } catch (err) {
-      console.error('Error updating profile:', err.response || err);
-      setError('Failed to update profile. Please try again.');
+      console.error('Error updating profile:', err.response || err)
+      setError('Failed to update profile. Please try again.')
     }
-  };
+  }
 
   const handleCancel = () => {
     navigate('/viewprofile');
@@ -113,7 +111,6 @@ const Edit = () => {
       <Navbar />
       <div className="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8 pt-40 mt-25">
         <div className="max-w-5xl w-full flex flex-col lg:flex-row gap-10">
-          {/* Sidebar */}
           <div className="w-full lg:w-1/3">
             <div className="border rounded p-4 text-center">
               <img
@@ -129,13 +126,11 @@ const Edit = () => {
               </button>
             </div>
           </div>
-
-          {/* Main Form */}
+          {/* form */}
           <div className="w-full lg:w-2/3">
             <div className="border rounded p-6 bg-white shadow">
               <h2 className="text-2xl font-semibold mb-6">Edit Profile</h2>
 
-              {/* Basic Info */}
               <div className="mb-6">
                 <h3 className="text-md font-semibold mb-2">Basic information</h3>
                 <div className="flex items-start gap-4 mb-4">
@@ -170,7 +165,7 @@ const Edit = () => {
                 />
               </div>
 
-              {/* Contact Info */}
+            {/* cont */}
               <div className="mb-6">
                 <h3 className="text-md font-semibold mb-2">Contact information</h3>
 
@@ -196,12 +191,9 @@ const Edit = () => {
                   />
                 </div>
               </div>
-
-              {/* Error and Success Messages */}
               {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               {success && <p className="text-green-600 text-sm mb-4">{success}</p>}
-
-              {/* Action Buttons */}
+              {/* btns */}
               <div className="flex justify-between gap-4 mt-8">
                 <button
                   onClick={handleCancel}
@@ -222,7 +214,7 @@ const Edit = () => {
       </div>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Edit;
+export default Edit

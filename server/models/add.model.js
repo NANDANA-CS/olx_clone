@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const addSchema = new mongoose.Schema({
     pic: { type: Array, required: true },
@@ -18,5 +18,5 @@ const addSchema = new mongoose.Schema({
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 
 })
-const Add=mongoose.model('Add',addSchema)
-export default Add
+
+export default mongoose.models.Adds|| mongoose.model('Add',addSchema)

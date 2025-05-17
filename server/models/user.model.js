@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
     profilepicture: { type: String, default: null },
@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     // wishlist:{type:Array,default:null},
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Add' }],
     otp:{type:Number,default:null}
-});
+})
 
-const User = mongoose.model('User', userSchema);
-export default User;
+export default mongoose.models.Users||mongoose.model('User', userSchema)
+

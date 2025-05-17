@@ -1,92 +1,89 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../../components/navbar/Navbar';
-import Footer from '../../components/footer/Footer';
+import React, { useEffect, useMemo, useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import Navbar from '../../components/navbar/Navbar'
+import Footer from '../../components/footer/Footer'
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [wishlist, setWishlist] = useState([]);
-  const productsPerPage = 8;
-  const navigate = useNavigate();
+  const [products, setProducts] = useState([])
+  const [filteredProducts, setFilteredProducts] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [wishlist, setWishlist] = useState([])
+  const productsPerPage = 8
+  const navigate = useNavigate()
 
-  const userId = localStorage.getItem('id');
+  const userId = localStorage.getItem('id')
 
   useEffect(() => {
     const adjustContentPadding = () => {
-      const navbar = document.querySelector('nav');
-      const homeContainer = document.querySelector('.home');
+      const navbar = document.querySelector('nav')
+      const homeContainer = document.querySelector('.home')
       if (navbar && homeContainer) {
-        const navbarHeight = navbar.offsetHeight;
-        homeContainer.style.paddingTop = `${navbarHeight + 16}px`;
+        const navbarHeight = navbar.offsetHeight
+        homeContainer.style.paddingTop = `${navbarHeight + 16}px`
       }
-    };
+    }
 
-    adjustContentPadding();
-    window.addEventListener('resize', adjustContentPadding);
-    return () => window.removeEventListener('resize', adjustContentPadding);
-  }, []);
+    adjustContentPadding()
+    window.addEventListener('resize', adjustContentPadding)
+    return () => window.removeEventListener('resize', adjustContentPadding)
+  }, [])
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/getproducts');
-        setProducts(response.data);
-        setFilteredProducts(response.data);
+        const response = await axios.get('http://localhost:3000/api/getproducts')
+        setProducts(response.data)
+        setFilteredProducts(response.data)
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching products:', error)
       }
-    };
+    }
 
     const fetchWishlist = async () => {
       if (userId) {
         try {
-          const response = await axios.get(`http://localhost:3000/api/user/${userId}`);
-          const data = response.data.wishlist || [];
-
-          // Extract only product IDs if necessary
+          const response = await axios.get(`http://localhost:3000/api/user/${userId}`)
+          const data = response.data.wishlist || []
           const wishlistIds = data.map((item) =>
             typeof item === 'string' ? item : item._id
-          );
-          setWishlist(wishlistIds);
+          )
+          setWishlist(wishlistIds)
         } catch (error) {
-          console.error('Error fetching wishlist:', error);
+          console.error('Error fetching wishlist:', error)
         }
       }
-    };
+    }
 
-    fetchProducts();
-    fetchWishlist();
-  }, [userId]);
+    fetchProducts()
+    fetchWishlist()
+  }, [userId])
 
   useEffect(() => {
     if (searchQuery.trim() === '') {
-      setFilteredProducts(products);
+      setFilteredProducts(products)
     } else {
       const filtered = products.filter((product) =>
         product.adtitle.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredProducts(filtered);
+      )
+      setFilteredProducts(filtered)
     }
     setCurrentPage(1);
-  }, [searchQuery, products]);
+  }, [searchQuery, products])
 
-  const wishlistIds = useMemo(() => wishlist.map(String), [wishlist]);
-
-  const handleSearch = (query) => setSearchQuery(query);
+  const wishlistIds = useMemo(() => wishlist.map(String), [wishlist])
+  const handleSearch = (query) => setSearchQuery(query)
 
   const handleProductClick = (productId) => {
     if (!productId) return;
-    navigate(`/preview/${productId}`);
-  };
+    navigate(`/preview/${productId}`)
+  }
 
   const handleWishlistClick = async (productId) => {
     if (!userId) {
-      alert('Please log in to add items to your wishlist');
-      return;
+      alert('Please log in to add items to your wishlist')
+      return
     }
 
     try {
@@ -98,17 +95,17 @@ const Home = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         }
-      );
+      )
 
       const updatedWishlist = response.data.wishlist.map((item) =>
         typeof item === 'string' ? item : item._id
       );
-      setWishlist(updatedWishlist);
+      setWishlist(updatedWishlist)
     } catch (error) {
-      console.error('Error toggling wishlist:', error);
-      alert('Failed to update wishlist');
+      console.error('Error toggling wishlist:', error)
+      alert('Failed to update wishlist')
     }
-  };
+  }
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -116,39 +113,39 @@ const Home = () => {
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setCurrentPage(pageNumber)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   };
 
   const getPageNumbers = () => {
-    const maxPagesToShow = 5;
-    const pages = [];
-    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+    const maxPagesToShow = 5
+    const pages = []
+    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2))
+    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1)
 
     if (endPage - startPage < maxPagesToShow - 1) {
-      startPage = Math.max(1, endPage - maxPagesToShow + 1);
+      startPage = Math.max(1, endPage - maxPagesToShow + 1)
     }
 
     for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
+      pages.push(i)
     }
-    return pages;
-  };
+    return pages
+  }
 
   return (
     <>
@@ -198,7 +195,7 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Pagination */}
+        {/* pgination */}
         {filteredProducts.length > 0 && (
           <div className="flex justify-center items-center mt-8 space-x-2">
             <button

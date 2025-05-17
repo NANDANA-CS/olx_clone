@@ -235,7 +235,6 @@ const Laptop = () => {
             </h1>
           </div>
           <div className="bg-white rounded-lg shadow-md p-3 xs:p-4 sm:p-6">
-            {/* Selected Category Section */}
             <div className="mb-4">
               <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
                 Selected Category
@@ -252,13 +251,12 @@ const Laptop = () => {
                 </button>
               </div>
             </div>
-            {/* Include Some Details Section */}
             <div className="mb-4">
               <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
                 Include Some Details
               </h2>
               <div className="p-2 space-y-4">
-                {/* Brand */}
+                {/* brand */}
                 <div>
                   <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Brand *
@@ -298,7 +296,7 @@ const Laptop = () => {
                     )}
                   </div>
                 </div>
-                {/* Ad Title */}
+                {/* title */}
                 <div>
                   <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Ad Title *
@@ -313,7 +311,7 @@ const Laptop = () => {
                     aria-label="Ad title"
                   />
                 </div>
-                {/* Description */}
+                {/* description */}
                 <div>
                   <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     Description *
@@ -330,7 +328,7 @@ const Laptop = () => {
                 </div>
               </div>
             </div>
-            {/* Set a Price Section */}
+            {/* price */}
             <div className="mb-4">
               <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
                 Set a Price
@@ -352,7 +350,7 @@ const Laptop = () => {
                 </div>
               </div>
             </div>
-            {/* Upload Photos Section */}
+            {/* photos */}
             <div className="mb-4">
               <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
                 Upload Photos
@@ -407,13 +405,13 @@ const Laptop = () => {
                 </div>
               </div>
             </div>
-            {/* Confirm Your Location Section */}
+            {/*  location */}
             <div className="mb-4">
               <h2 className="text-base xs:text-lg sm:text-xl font-bold uppercase p-2">
                 Confirm Your Location
               </h2>
               <div className="p-2 space-y-4">
-                {/* State */}
+                {/* state */}
                 <div>
                   <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
                     State *
@@ -453,7 +451,7 @@ const Laptop = () => {
                     )}
                   </div>
                 </div>
-                {/* City */}
+                {/* city */}
                 {location.state && (
                   <div>
                     <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
@@ -497,7 +495,7 @@ const Laptop = () => {
                     </div>
                   </div>
                 )}
-                {/* Neighborhood */}
+                {/* neigh*/}
                 {location.city && (
                   <div>
                     <label className="block text-xs xs:text-sm sm:text-base font-medium text-gray-700 mb-1">
@@ -544,7 +542,7 @@ const Laptop = () => {
                 )}
               </div>
             </div>
-            {/* Post Your Ad Button */}
+            {/* post */}
             <div className="p-2">
               <button
                 onClick={handlePostAd}
@@ -560,7 +558,7 @@ const Laptop = () => {
       </div>
       <Foot />
     </>
-  );
-};
+  )
+}
 
-export default Laptop;
+export default Laptop

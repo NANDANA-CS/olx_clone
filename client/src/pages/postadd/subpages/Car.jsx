@@ -253,26 +253,19 @@ const Car = () => {
   return (
     <>
       <Navpost />
-      {/* Main Container - Full width with responsiveness */}
       <div className="flex justify-center p-2 md:p-4 bg-gray-100 min-h-screen">
         <div className="w-full relative">
           
-          {/* Header */}
+        
           <div className="flex mb-4">
             <h1 className="text-xl md:text-2xl font-bold uppercase mx-auto">Post Your Ad</h1>
           </div>
-          
-          {/* Error Message */}
           {error && (
             <div className="mb-4 p-2 bg-red-100 text-red-700 text-sm rounded-md max-w-3xl mx-auto">
               {error}
             </div>
           )}
-          
-          {/* Main Form Container */}
           <div className="bg-white rounded-lg shadow-md p-3 md:p-4 max-w-3xl mx-auto">
-            
-            {/* Selected Category Section */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Selected Category</h2>
               <div className="flex justify-between items-center p-2">
@@ -285,12 +278,10 @@ const Car = () => {
                 </span>
               </div>
             </div>
-            
-            {/* Include Some Details Section */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Include Some Details</h2>
               <div className="p-2 space-y-4">
-                {/* Brand */}
+                {/* brand */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Brand *
@@ -320,7 +311,7 @@ const Car = () => {
                   </div>
                 </div>
                 
-                {/* Car Name */}
+                {/* car */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Car Name *
@@ -335,7 +326,7 @@ const Car = () => {
                   />
                 </div>
                 
-                {/* Year */}
+                {/* year */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Year *
@@ -351,7 +342,7 @@ const Car = () => {
                   </div>
                 </div>
 
-                {/* Fuel */}
+                {/* fuel */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Fuel *
@@ -373,7 +364,7 @@ const Car = () => {
                   </div>
                 </div>
                 
-                {/* Transmission */}
+                {/* transmission */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Transmission *
@@ -395,7 +386,7 @@ const Car = () => {
                   </div>
                 </div>
                 
-                {/* Kilometers Driven */}
+                {/* km */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Kilometers Driven *
@@ -409,7 +400,7 @@ const Car = () => {
                   />
                 </div>
                 
-                {/* Number of Owners */}
+                {/* owner */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Number of Owners *
@@ -431,7 +422,7 @@ const Car = () => {
                   </div>
                 </div>
                 
-                {/* Ad Title */}
+                {/* title */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Ad title *
@@ -445,7 +436,7 @@ const Car = () => {
                   />
                 </div>
                 
-                {/* Description */}
+                {/* description */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Description *
@@ -462,11 +453,10 @@ const Car = () => {
               </div>
             </div>
 
-            {/* Set a Price Section */}
+            {/* price */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Set a Price</h2>
               <div className="p-2 space-y-4">
-                {/* Price */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Price *
@@ -485,7 +475,7 @@ const Car = () => {
             
             <hr className='border border-gray-200' />
             
-            {/* Upload Photos Section */}
+            {/* photos */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Upload Photos</h2>
               <div className="p-2">
@@ -552,11 +542,11 @@ const Car = () => {
             
             <hr className='border border-gray-200' />
             
-            {/* Confirm Your Location Section */}
+            {/* location */}
             <div className="mb-4">
               <h2 className="text-base font-bold uppercase p-2">Confirm Your Location</h2>
               <div className="p-2 space-y-4">
-                {/* State */}
+                {/* state */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     State *
@@ -583,7 +573,7 @@ const Car = () => {
                   </div>
                 </div>
                 
-                {/* City */}
+                {/* city */}
                 {location.state && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -614,7 +604,7 @@ const Car = () => {
                   </div>
                 )}
                 
-                {/* Neighborhood */}
+                {/* neigh */}
                 {location.city && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -650,7 +640,7 @@ const Car = () => {
             
             <hr className='border border-gray-200' />
             
-            {/* Post Your Ad Button */}
+            {/* post add */}
             <div className="p-2">
               <button
                 onClick={handlePostAd}
@@ -664,7 +654,7 @@ const Car = () => {
       </div>
       <Foot />
     </>
-  );
-};
+  )
+}
 
-export default Car;
+export default Car

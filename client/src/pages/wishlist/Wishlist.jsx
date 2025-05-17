@@ -15,14 +15,14 @@ const Wishlist = () => {
     const fetchWishlistProducts = async () => {
       try {
         const userRes = await axios.get(`http://localhost:3000/api/user/${userId}`)
-        const wishlist = userRes.data.wishlist || [];
+        const wishlist = userRes.data.wishlist || []
 
         const wishlistIds = wishlist.map((item) =>
           typeof item === 'string' ? item : item._id
         );
 
-        const productRes = await axios.get('http://localhost:3000/api/getproducts');
-        const allProducts = productRes.data;
+        const productRes = await axios.get('http://localhost:3000/api/getproducts')
+        const allProducts = productRes.data
 
         const filtered = allProducts
           .filter((product) => wishlistIds.includes(String(product._id)))
@@ -38,7 +38,7 @@ const Wishlist = () => {
     }
 
     if (userId) {
-      fetchWishlistProducts();
+      fetchWishlistProducts()
     }
   }, [userId])
 
@@ -49,12 +49,12 @@ const Wishlist = () => {
       const filtered = wishlistProducts.filter((product) =>
         product.adtitle.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredWishlistProducts(filtered);
+      setFilteredWishlistProducts(filtered)
     }
-  }, [searchQuery, wishlistProducts]);
+  }, [searchQuery, wishlistProducts])
 
   const handleProductClick = (productId) => {
-    navigate(`/preview/${productId}`);
+    navigate(`/preview/${productId}`)
   };
 
   const handleRemoveFromWishlist = async (productId) => {
@@ -67,27 +67,27 @@ const Wishlist = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         }
-      );
+      )
 
       const updatedWishlistIds = response.data.wishlist.map((item) =>
         typeof item === 'string' ? item : item._id
-      );
+      )
 
       setWishlistProducts((prev) =>
         prev.filter((product) => updatedWishlistIds.includes(product._id))
-      );
+      )
       setFilteredWishlistProducts((prev) =>
         prev.filter((product) => updatedWishlistIds.includes(product._id))
-      );
+      )
     } catch (error) {
-      console.error('Error removing from wishlist:', error);
-      alert('Failed to update wishlist');
+      console.error('Error removing from wishlist:', error)
+      alert('Failed to update wishlist')
     }
-  };
+  }
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-  };
+  }
 
   return (
     <>

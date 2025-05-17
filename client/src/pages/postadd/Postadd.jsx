@@ -50,9 +50,8 @@ const Postadd = () => {
             CHOOSE A CATEGORY
           </div>
           
-          {/* Category selection  */}
+       
           <div className="flex flex-col md:flex-row">
-            {/* Categories list */}
             <div className="w-full md:w-1/2 border-b md:border-b-0 md:border-r">
               <ul className="w-full">
                 <li
@@ -108,7 +107,7 @@ const Postadd = () => {
               </ul>
             </div>
             
-            {/* Subcategories */}
+            {/* sub*/}
             <div className="w-full md:w-1/2 bg-gray-50 md:bg-white">
               {selectedCategory && (
                 <ul className="w-full">
@@ -135,7 +134,7 @@ const Postadd = () => {
       </div>
       <Foot />
     </div>
-  );
-};
+  )
+}
 
-export default Postadd;
+export default Postadd
