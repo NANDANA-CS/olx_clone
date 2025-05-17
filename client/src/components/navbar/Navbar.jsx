@@ -53,7 +53,7 @@ const Navbar = ({ onSearch }) => {
           }
         } catch (err) {
           console.error('Error fetching user data:', err.response || err);
-          // Keep Auth0 data if database fetch fails
+         
         }
       };
       fetchUserData();
@@ -156,7 +156,7 @@ const Navbar = ({ onSearch }) => {
               <img
                 src="/images/bc65b85d-d193-4d92-a00e-09bfc4299345.svg"
                 alt="Like"
-                className="h-8 cursor-pointer hover:opacity-75 transition-opacity"
+                className="h-14 cursor-pointer hover:opacity-75 transition-opacity"
               />
             </div>
             <div className="mt-0">

@@ -110,7 +110,7 @@ const Viewprofile = () => {
             <p className="text-lg font-semibold">You haven't listed anything yet</p>
             <p className="text-sm text-gray-500 mb-4">Let go of what you don’t use anymore</p>
             <button
-              onClick={() => navigate('/post')}
+              onClick={() => navigate('/postadd')}
               className="bg-blue-800 text-white font-bold py-2 px-6 rounded hover:bg-white hover:text-blue-800 border hover:border-blue-800 transition"
             >
               Start selling
