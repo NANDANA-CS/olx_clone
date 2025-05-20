@@ -87,7 +87,7 @@ const Navbar = ({ onSearch }) => {
     onSearch(query);
   };
 
-  const categories = ['Cars', 'Bikes', 'Mobiles', 'Laptops'];
+  const categories = ['Cars', 'Bikes', 'Mobiles', 'Laptops']
 
   return (
     <nav className="bg-gray-100 shadow-md fixed top-0 left-0 right-0 w-full z-50">
